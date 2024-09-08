@@ -1,6 +1,6 @@
-# Fit Together
+# WeAreFit
 
-Fit Together is a web-based fitness app designed to encourage users to engage in daily fitness challenges and share their progress with friends. The app combines fitness tracking, social interaction, and gamification to create an engaging experience for fitness enthusiasts.
+WeAreFit is a web-based fitness app designed to encourage users to engage in daily fitness challenges and share their progress with friends. The app combines fitness tracking, social interaction, and gamification to create an engaging experience for fitness enthusiasts.
 
 ## Features
 
@@ -33,8 +33,8 @@ Fit Together is a web-based fitness app designed to encourage users to engage in
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/fit-together.git
-   cd fit-together
+   git clone https://github.com/cmgvc/WeAreFit.git
+   cd WeArefit
 ## Installation
 
 2. **Set Up the Backend**
@@ -99,7 +99,7 @@ Fit Together is a web-based fitness app designed to encourage users to engage in
 
 ## Usage
 
-- **Access the App**: Open your web browser and navigate to `http://localhost:3000` (or the port specified in your configuration) to access the Fit Together web app.
+- **Access the App**: Open your web browser and navigate to `http://localhost:3000` (or the port specified in your configuration) to access the WeAreFit web app.
 - **Create an Account**: Sign up or log in to start participating in daily challenges and tracking your progress.
 - **Participate in Challenges**: Complete daily fitness challenges and share your results with friends.
 
@@ -121,7 +121,7 @@ Fit Together is a web-based fitness app designed to encourage users to engage in
 
 ## Contributing
 
-We welcome contributions to Fit Together! Please follow these steps to contribute:
+We welcome contributions to WeAreFit! Please follow these steps to contribute:
 
 1. Fork the repository.
 2. Create a new branch for your changes.
@@ -136,4 +136,4 @@ For any inquiries or support, please contact me at cmgvc.
 
 ---
 
-Thank you for using Fit Together! We hope you enjoy staying fit and connected
+Thank you for using WeAreFit! We hope you enjoy staying fit and connected
