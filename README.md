@@ -14,7 +14,7 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 ## Tech Stack
 
 - **Frontend**: React.js
-- **Backend**: Node.js with Express or Django
+- **Backend**: Node.js with Express
 - **Database**: PostgreSQL or MongoDB
 - **APIs**: Apple Health, Google Fit
 - **Deployment**: Netlify or Vercel for frontend, Heroku or AWS for backend
@@ -49,8 +49,6 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 
      ```bash
      npm install
-     # or for Django
-     pip install -r requirements.txt
      ```
 
    - Create a `.env` file in the backend directory and add your environment variables.
@@ -59,8 +57,6 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 
      ```bash
      npm start
-     # or for Django
-     python manage.py runserver
      ```
 
 3. **Set Up the Frontend**
