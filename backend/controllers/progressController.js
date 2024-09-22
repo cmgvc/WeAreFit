@@ -1,11 +1,24 @@
 const Progress = require('../models/Progress');
+const User = require('../models/User');
 
 // Handle complete a task
 exports.completeTask = async (req, res) => {
     try {
-        const {userId, taskId, difficulty} = req.body;
+        const {userId, taskId, dateCompleted, difficulty} = req.body;
         const progress = new Progress({userId, taskId, difficulty}); 
         await progress.save();
+
+        const today = new Date(dateCompleted);
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        const user = await User.find({userId});
+
+        if (user.lastCompletedDate && user.lastCompletedDate.toDateString() === yesterday.toDateString()) {
+            user.streak += 1;
+        } else {
+            user.streak = 1;
+        }
+
         res.status(201).json({message: 'Task completed successfully'});
     } catch (error) {
         res.status(500).json({error: 'Server error'});
