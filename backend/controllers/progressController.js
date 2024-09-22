@@ -18,7 +18,7 @@ exports.completeTask = async (req, res) => {
         } else {
             user.streak = 1;
         }
-
+        await user.save();
         res.status(201).json({message: 'Task completed successfully'});
     } catch (error) {
         res.status(500).json({error: 'Server error'});
@@ -55,6 +55,7 @@ exports.updateProgress = async (req, res) => {
             return this.completeTask(req, res);
         }  
         progress.difficulty = difficulty;
+        await progress.save();
     } catch (error ) {
         res.status(500).json({error: 'Server error'});
     }
@@ -65,7 +66,7 @@ exports.deleteProgress = async (req, res) => {
     const userId = req.params.id;
     const {dateCompleted} = req.body;
     try {
-        const progress = await Progress.findByIdAndDelete(id);
+        const progress = await Progress.findOneAndDelete({userId, dateCompleted});
 
         if (!progress) {
             return res.status(404).json({ message: 'Progress not found' });
@@ -75,3 +76,5 @@ exports.deleteProgress = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 }
+
+module.exports = router;

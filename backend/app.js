@@ -14,8 +14,10 @@ connectDB();
 
 const authRoutes = require('./routes/authRoutes.js');
 const progressRoutes = require('./routes/progressRoutes.js');
+const friendRoutes = require('./routes/friendRoutes.js');
 app.use('/api/auth', authRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/friends', friendRoutes);
 
 app.get('/', (req, res) => {
     res.send('WeAreFit Backend API');

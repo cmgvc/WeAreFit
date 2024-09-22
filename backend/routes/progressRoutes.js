@@ -1,5 +1,5 @@
 const express = require('express');
-const {getProgress, addProgress, updateProgress, deleteProgress} = require('../controllers/progressController.js')
+const {completeTask, getProgressByDate, updateProgress, deleteProgress} = require('../controllers/progressController.js')
 const router = express.Router();
 
 // Add new completed task as new progress
