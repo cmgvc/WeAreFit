@@ -7,7 +7,6 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 - **Daily Fitness Challenges**: Receive and complete daily fitness challenges.
 - **Social Sharing**: Share workout results and progress with friends.
 - **Progress Tracking**: Monitor your fitness progress and achievements.
-- **Integration with Fitness APIs**: Sync workout data with Apple Health and Google Fit.
 - **Leaderboards**: Compete with friends and view global leaderboards.
 - **Notifications and Reminders**: Stay motivated with timely reminders.
 
@@ -15,17 +14,15 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 
 - **Frontend**: React.js
 - **Backend**: Node.js with Express
-- **Database**: PostgreSQL or MongoDB
-- **APIs**: Apple Health, Google Fit
-- **Deployment**: Netlify or Vercel for frontend, Heroku or AWS for backend
+- **Database**: MongoDB
+- **Deployment**: Vercel for frontend, AWS for backend
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js (for backend and frontend development)
-- PostgreSQL or MongoDB (depending on your database choice)
-- Python (for Django backend, if applicable)
+- MongoDB
 - Git
 
 ### Installation
@@ -81,17 +78,8 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 
 4. **Database Setup**
 
-   - Set up your database using the provided schema. For PostgreSQL:
-
-     ```bash
-     psql -U yourusername -d yourdatabase -f schema.sql
-     ```
-
+   - Set up your database using the provided schema.
    - For MongoDB, import the schema or create collections as needed.
-
-5. **API Integration**
-
-   - Configure API keys and credentials for Apple Health and Google Fit in your `.env` file.
 
 ## Usage
 
