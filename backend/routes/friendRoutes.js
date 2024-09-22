@@ -10,3 +10,5 @@ router.get('/:userId', getFriends);
 
 // Delete a friend
 router.delete('/delete', deleteFriend);
+
+module.exports = router;

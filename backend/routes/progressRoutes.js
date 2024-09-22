@@ -14,3 +14,4 @@ router.put('/update/:id', updateProgress);
 // Delete progress
 router.delete('/delete/:id', deleteProgress);
 
+module.exports = router;
