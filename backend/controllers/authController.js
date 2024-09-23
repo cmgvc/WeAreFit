@@ -6,6 +6,11 @@ const User = require('../models/User.js');
 exports.register = async (req, res) => {
     const {username, email, password} = req.body;
     try {
+
+        if (User.find({email})) {
+            return res.status(400).json({error: 'Email already exists'});
+        }
+
         // Hash password before saving in database
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -23,7 +28,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     const {email, password} = req.body;
     try {
-        const user = await User.find({email});
+        const user = await User.findOne({email});
         if (!user) {
             return res.status(400).json({error: 'Invalid email'});
         }
