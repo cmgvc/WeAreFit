@@ -4,25 +4,29 @@ const User = require('../models/User.js');
 
 // Register a new user
 exports.register = async (req, res) => {
-    const {username, email, password} = req.body;
-    try {
+    const { username, email, password } = req.body;
 
-        if (User.find({email})) {
-            return res.status(400).json({error: 'Email already exists'});
+    try {
+        // Check if the email already exists
+        const existingUser = await User.findOne({ email: email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email already exists' });
         }
 
-        // Hash password before saving in database
+        // Hash password before saving in the database
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create a new user
-        const user = new User({username, email, password: hashedPassword});
+        const user = new User({ username, email, password: hashedPassword });
         await user.save();
 
-        res.status(201).json({message: 'User registered successfully'});
+        res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        res.status(500).json({error: 'Server error'});
+        console.error(error); // Log the error for debugging
+        res.status(500).json({ error: 'Server error' });
     }
-}
+};
+
 
 // Login an existing user
 exports.login = async (req, res) => {

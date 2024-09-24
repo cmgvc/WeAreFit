@@ -1,13 +1,13 @@
 const Progress = require('../models/Progress.js');
 const User = require('../models/User.js');
+const { findUser } = require('../models/User.js');
 
 // Handle complete a task
 exports.completeTask = async (req, res) => {
     const {userId, taskId, dateCompleted, difficulty} = req.body;
 
     try {
-        // Find user
-        const user = await User.findOne({username: userId});
+        const user = await findUser(userId);
         if (!user) {
             return res.status(404).json({error: 'User not found'});
         }
@@ -53,10 +53,9 @@ exports.getProgressByDate = async (req, res) => {
         const endDate = new Date(targetDate);
         endDate.setHours(23, 59, 59, 999); // Set to end of the day
 
-        // Find the user by username
-        const user = await User.findOne({ username: userId });
+        const user = await findUser(userId);
         if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({error: 'User not found'});
         }
 
         // Find progress for the user on that date
@@ -82,10 +81,9 @@ exports.updateProgress = async (req, res) => {
     const { dateCompleted, difficulty} = req.body;
     
     try {
-        // Find the user by username
-        const user = await User.findOne({ username: userId }); 
+        const user = await findUser(userId);
         if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({error: 'User not found'});
         }
 
         // Find the progress for the user for that date 
@@ -110,10 +108,10 @@ exports.deleteProgress = async (req, res) => {
     const userId = req.params.id;
     const { dateCompleted } = req.body;
     try {
-        // Find the user by username
-        const user = await User.findOne({ username: userId });
+        // Find user
+        const user = await getUser(userId);
         if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({error: 'User not found'});
         }
 
         const progress = await Progress.findOneAndDelete({userId: user._id, dateCompleted});
