@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { completeTask } = require('../controllers/progressController');
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true },

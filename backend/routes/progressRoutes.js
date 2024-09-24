@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/add', completeTask);
 
 // Get all progress by date
-router.get('/', getProgressByDate);
+router.post('/', getProgressByDate);
 
 // Update progress difficulty
 router.put('/update/:id', updateProgress);
