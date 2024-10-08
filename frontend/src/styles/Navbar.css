@@ -2,12 +2,8 @@
     display: flex;
     justify-content: space-between; 
     align-items: center;         
-    padding: 0.5rem 3rem;    
+    padding: 1.5rem 3rem;    
     background-color: #f8f8f8
-}
-
-.logo {
-    padding: 1rem 0;          
 }
 
 .logo img {
@@ -22,22 +18,56 @@
 
 .nav a {
     color: #000000;
-    font-family: 'Khmer Sangam MN', sans-serif;
     text-decoration: none;
     padding: 0 1rem;       
 }
 
+.icon {
+    display: none;
+}
+
 .join button {
     padding: 0.5rem 1rem;        
+    margin-bottom: 0.5rem;
     background-color: #000000;    
     color: #ffffff;               
     border: none;                
     border-radius: 150px;           
     cursor: pointer;              
-    font-family: 'Khmer Sangam MN', sans-serif;
+
 
     a {
         color: #ffffff;
         text-decoration: none;
     }
+}
+
+@media screen and (max-width: 788px) {
+    .nav {
+        display: none;
+    }
+
+    .logo {
+        margin-right: auto;
+    }
+
+    .icon {
+        margin-left: auto;
+        display: inline;
+        cursor: pointer;
+        margin-top: 0.3rem;
+        padding: 0 1rem;
+    }
+
+    .icon a {
+        color: #000000;
+    }
+    
+}
+
+@media screen and (max-width: 400px) {
+    .join a {
+        font-size: x-small;
+    }
+    
 }
