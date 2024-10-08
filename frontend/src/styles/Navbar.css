@@ -10,11 +10,8 @@
     padding: 1rem 0;          
 }
 
-.logo a {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: #000000;
+.logo img {
+    width: 150px;             
 }
 
 .nav {
