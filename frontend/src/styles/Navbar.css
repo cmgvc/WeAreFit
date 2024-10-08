@@ -1,0 +1,46 @@
+.navbar {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;         
+    padding: 0.5rem 3rem;    
+    background-color: #f8f8f8
+}
+
+.logo {
+    padding: 1rem 0;          
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000000;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;        
+    align-items: center;              
+}
+
+.nav a {
+    color: #000000;
+    font-family: 'Khmer Sangam MN', sans-serif;
+    text-decoration: none;
+    padding: 0 1rem;       
+}
+
+.join button {
+    padding: 0.5rem 1rem;        
+    background-color: #000000;    
+    color: #ffffff;               
+    border: none;                
+    border-radius: 150px;           
+    cursor: pointer;              
+    font-family: 'Khmer Sangam MN', sans-serif;
+
+    a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+}
