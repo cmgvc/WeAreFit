@@ -42,6 +42,10 @@
     }
 }
 
+.hiddenLinks {
+    display: none;
+}
+
 @media screen and (max-width: 788px) {
     .nav {
         display: none;
@@ -59,8 +63,43 @@
         padding: 0 1rem;
     }
 
-    .icon a {
-        color: #000000;
+    .icon button {
+        background-color: #f8f8f8;
+        border: none;
+        cursor: pointer;
+    }
+
+    .hiddenLinks#open {
+        display: flex;  
+        flex-direction: column; 
+        align-items: center;
+        position: absolute;
+        top: 90px; 
+        left: 0;
+        width: 100%;
+        background-color: #f8f8f8; 
+
+        a {
+            padding: 0.5rem 0;
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            width: 100%;
+            display: block;
+            border: 1px solid #d3d3d3;
+        }
+        a:first-child {
+            border-bottom: none;  
+        }
+        
+        a:last-child {
+            border-top: none;
+        }
+        
+    }
+
+    .hiddenLinks#close {
+        display: none;  /* Keep hidden when the state is false */
     }
     
 }

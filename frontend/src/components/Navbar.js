@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 import Logo from '../assets/WeAreFitLogo.svg';
 import ReorderIcon from '@mui/icons-material/Reorder';
 
 function Navbar() {
+
+    const [openLinks, setOpenLinks] = useState(false);
+    const toggleNavbar = () => {
+        setOpenLinks(!openLinks);
+    }
   return (
     <div className='navbar'>
         <div className='logo'>
@@ -16,9 +21,14 @@ function Navbar() {
             <Link to="/past">PAST CHALLENGES</Link>
         </div>
         <div className='icon'>
-            <a href='/'>
+            <button onClick={toggleNavbar}>
                 <ReorderIcon />
-            </a>
+            </button>
+        </div>
+        <div className='hiddenLinks' id={openLinks ? "open" : "close"}>
+            <Link to="/dashboard">DASHBOARD</Link>
+            <Link to="/account">ACCOUNT</Link>
+            <Link to="/past">PAST CHALLENGES</Link>
         </div>
         <div className='join'>
             <button><Link to="/join">+ JOIN NOW</Link></button>
