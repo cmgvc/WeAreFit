@@ -104,9 +104,8 @@
     
 }
 
-@media screen and (max-width: 400px) {
-    .join a {
-        font-size: x-small;
+@media screen and (max-width: 420px) {
+    .navbar {
+        padding: 1.5rem 2rem ;
     }
-    
 }
