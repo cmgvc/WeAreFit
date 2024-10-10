@@ -1,0 +1,42 @@
+.description {
+    justify-content: left;
+    padding-left: 50px;
+    padding-right: 50px;
+    
+}
+
+.slogan {
+    font-size: 125px;
+    line-height: 0.85em;
+    text-align: left;
+    padding-top: 3.75rem;
+    width: 300px;
+}
+
+.about {
+    margin-top: 0;
+    padding-top: 20px;
+    line-height: 27px;;
+    text-align: left;
+    padding-bottom: 30px;
+    border-bottom: 1px solid 
+}
+
+@media screen and (max-width: 788px) {
+    .slogan {
+        font-size: 65px;
+    }
+
+    .about {
+        font-size: small;
+        line-height: 20px;
+    }
+
+}
+
+@media screen and (max-width: 420px) {
+    .slogan {
+        font-size: 58px;
+    }
+
+}
