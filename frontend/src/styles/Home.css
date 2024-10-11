@@ -185,6 +185,11 @@
     padding-top: 3.75rem;
 }
 
+.connect a {
+    text-decoration: none;
+    color: white;
+}
+
 .connectButton button {
     padding: 1rem 1.5rem;  
     margin-top: 1.5rem;

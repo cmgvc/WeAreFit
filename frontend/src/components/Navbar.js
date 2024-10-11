@@ -31,7 +31,7 @@ function Navbar() {
             <Link to="/past">PAST CHALLENGES</Link>
         </div>
         <div className='join'>
-            <button><Link to="/join">+ JOIN NOW</Link></button>
+            <button><Link to="/register">+ JOIN NOW</Link></button>
         </div>
     </div>
   )

@@ -47,13 +47,11 @@ function Home() {
         setIntermediateChallenge(false);
     }
 
-    const addLogRedirect = () => {
-        return '/dashboard';
-    }
+    const addLogRedirect = '/dashboard';
+    
 
-    const joinNowRedirect = () => {
-        return '/account';
-    }
+    const joinNowRedirect = '/account';
+    
 
   return (
     <div>
