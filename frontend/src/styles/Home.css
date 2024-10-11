@@ -81,7 +81,7 @@
 
 .beginnerChallenge#open {
     text-align: center;
-    padding: 4rem;
+    padding: 2rem;
     color: black;
     .leftText {
         line-height: 0.5rem;
@@ -107,7 +107,7 @@
 
 .intermediateChallenge#open {
     text-align: center;
-    padding: 4rem;
+    padding: 2rem;
     .leftText {
         line-height: 0.5rem;
     }
@@ -132,7 +132,7 @@
 
 .advancedChallenge#open {
     text-align: center;
-    padding: 4rem;
+    padding: 2rem;
     .leftText {
         line-height: 0.5rem;
     }

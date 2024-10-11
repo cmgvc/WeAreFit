@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db.js');
 const cors = require('cors');
 const app   = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const { generateDailyChallenge } = require('./controllers/challengeController');
 
 dotenv.config();

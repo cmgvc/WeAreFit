@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../styles/Home.css';
 import '../assets/about.txt';
+import { getUrl } from '../util/constants.js';
 
 function Home() {
     const today = new Date();
@@ -14,61 +15,37 @@ function Home() {
     const [advancedChallenge, setAdvancedChallenge] = useState(false);
     const [advanced, setAdvanced] = useState('');
 
-    const fetchRandomBeginner = async () => {
+    const fetchRandomWorkout = async () => {
         try {
-          const response = await fetch('/beginner.txt'); 
-          const text = await response.text();
-          const lines = text.split('\n');
-          const randomIndex = Math.floor(Math.random() * lines.length);
-          setBeginner(lines[randomIndex].trim());
+            const response = await fetch(`${getUrl()}/api/challenge`); 
+            const data = await response.json();
+            setBeginner(data.beginnerWorkout);
+            setIntermediate(data.intermediateWorkout);
+            setAdvanced(data.advancedWorkout);
         } catch (error) {
-          console.error('Error fetching the text file:', error);
-        }
-    };
-    const fetchRandomIntermediate = async () => {
-        try {
-          const response = await fetch('/intermediate.txt'); 
-          const text = await response.text();
-          const lines = text.split('\n');
-          const randomIndex = Math.floor(Math.random() * lines.length);
-          setIntermediate(lines[randomIndex].trim());
-        } catch (error) {
-          console.error('Error fetching the text file:', error);
-        }
-    };
-    const fetchRandomAdvanced = async () => {
-        try {
-          const response = await fetch('/advanced.txt'); 
-          const text = await response.text();
-          const lines = text.split('\n');
-          const randomIndex = Math.floor(Math.random() * lines.length);
-          setAdvanced(lines[randomIndex].trim());
-        } catch (error) {
-          console.error('Error fetching the text file:', error);
+            console.error('Error fetching the text file:', error);
         }
     };
 
     const toggleChallenge = () => {
         setOpenChallenge(true);
         toggleBeginner();
+        fetchRandomWorkout();
     }
     const toggleBeginner = () => {
         setBeginnerChallenge(true);
         setIntermediateChallenge(false);
         setAdvancedChallenge(false);
-        fetchRandomBeginner();
     }
     const toggleIntermediate = () => {
         setIntermediateChallenge(true);
         setBeginnerChallenge(false);
         setAdvancedChallenge(false);
-        fetchRandomIntermediate();
     }
     const toggleAdvanced = () => {
         setAdvancedChallenge(true);
         setBeginnerChallenge(false);
         setIntermediateChallenge(false);
-        fetchRandomAdvanced();
     }
   return (
     <div>
