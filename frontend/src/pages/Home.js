@@ -2,12 +2,10 @@ import React, { useState } from 'react'
 import '../styles/Home.css';
 import '../assets/about.txt';
 import { getUrl } from '../util/host.js';
-import { Link } from 'react-router-dom';
+import { formattedDate } from '../util/date.js';
+import PersonIcon from '@mui/icons-material/Person';
 
 function Home() {
-    const today = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = today.toLocaleDateString('en-US', options);
     const [openChallenge, setOpenChallenge] = useState(false);
     const [beginnerChallenge, setBeginnerChallenge] = useState(false);
     const [beginner, setBeginner] = useState('');
@@ -52,6 +50,11 @@ function Home() {
     const addLogRedirect = () => {
         return '/dashboard';
     }
+
+    const joinNowRedirect = () => {
+        return '/account';
+    }
+
   return (
     <div>
         <div className="description">
@@ -94,11 +97,20 @@ function Home() {
                     </div>
                 </div>
                 <div className='complete'>
-                    <button><a href={addLogRedirect()}>+ ADD TO LOG</a></button>
+                    <button><a href={addLogRedirect}>+ ADD TO LOG</a></button>
                 </div>
             </div>
         </div>
         <div className="connect">
+            <div className="connectButton">
+                <button><PersonIcon /><a href={joinNowRedirect}>JOIN NOW</a></button>
+            </div>
+            <div className="connectTitle">
+                COMPETE, CONNECT... <br></br>GET FIT TOGETHER!
+            </div>
+        </div>
+        <div className="connectDescription">
+                Add friends to your profile and see their recent activity to stay motivated and inspired. Track your longest completion streaks and compare them with friends to see who’s on top. Our dynamic leaderboard showcases top performers across various filters such as streak length, quickest completion times, and more. Celebrate your friends’ achievements with personalized shoutouts and send friendly reminders to keep them engaged. Whether you’re cheering each other on or setting up new challenges, WeAreFit makes it easy to stay connected and motivated in your fitness journey. 
         </div>
     </div>
     

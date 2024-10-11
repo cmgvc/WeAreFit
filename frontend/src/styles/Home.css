@@ -16,7 +16,7 @@
 .about {
     margin-top: 0;
     padding-top: 20px;
-    line-height: 27px;;
+    line-height: 27px;
     text-align: left;
     padding-bottom: 30px;
     border-bottom: 1px solid 
@@ -28,7 +28,7 @@
 
 .startTitle {
     padding-top: 3.75rem;
-    font-size: 50px;
+    font-size: 75px;
     padding-left: 50px;
     padding-right: 50px;
     line-height: 0.85em;
@@ -43,6 +43,9 @@
     border: none;                
     border-radius: 150px;           
     cursor: pointer;  
+    &:hover {
+        background-color: #282828;
+    }
 }
 
 .challengeButton button#true {
@@ -166,11 +169,52 @@
         border: none;                
         border-radius: 150px;           
         cursor: pointer;  
+        
+        &:hover {
+            background-color: #282828;
+        }
         a {
             color: #ffffff;
             text-decoration: none;
         }
     }
+}
+.connect {
+    display: flex;
+    justify-content: center;
+    padding-top: 3.75rem;
+}
+
+.connectButton button {
+    padding: 1rem 1.5rem;  
+    margin-top: 1.5rem;
+    margin-right: 3rem; 
+    background-color: #000000;    
+    color: #ffffff;               
+    border: none;                
+    border-radius: 150px;           
+    cursor: pointer;  
+    display: flex;
+    gap: 5px;
+}
+
+.connectButton button:hover {
+    background-color: #282828;
+}
+
+.connectTitle {
+    font-size:75px;
+    padding-left: 50px;
+    line-height: 0.85em;
+}
+
+.connectDescription {
+    padding-top: 32px;
+    line-height: 27px;
+    text-align: left;
+    width: 1000px;
+    margin: auto;
+    padding-bottom: 50px;
 }
 
 @media screen and (max-width: 788px) {

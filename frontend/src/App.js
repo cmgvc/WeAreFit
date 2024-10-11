@@ -5,7 +5,9 @@ import Account from './pages/Account';
 import Dashboard from './pages/Dashboard';
 import Past from './pages/Past';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -15,10 +17,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/account" element={<Account />} />
           <Route path="/past" element={<Past />} />
         </Routes>
+        <Footer />
       </Router>
      
     </div>

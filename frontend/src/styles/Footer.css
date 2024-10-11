@@ -1,0 +1,75 @@
+.footer {
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.footer-links {
+    display: flex;
+
+    padding-left: 10%;
+    color: white;
+}
+
+.footer-account,
+.footer-about {
+    display: flex;
+    flex-direction: column; 
+    margin-right: 7rem;
+}
+
+.footer-account h4 {
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    opacity: 0.7;
+}
+
+.footer-account a {
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    text-align: left;
+    font-weight: bold;
+}
+
+.footer-about h4 {
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    opacity: 0.7;
+    text-align: left;
+}
+
+.footer-about a {
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    text-align: left;
+    font-weight: bold;
+}
+
+.socials {
+    padding-right: 10%;
+    align-items: center;
+}
+
+.socials h4 {
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    opacity: 0.7;
+    text-align: left;
+}
+
+.socials-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 55px;
+}
+
+.socials a {
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    text-align: left;
+    font-weight: bold;
+}
