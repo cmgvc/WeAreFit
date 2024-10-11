@@ -3,28 +3,72 @@ import '../styles/Home.css';
 import '../assets/about.txt';
 
 function Home() {
+    const today = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = today.toLocaleDateString('en-US', options);
     const [openChallenge, setOpenChallenge] = useState(false);
     const [beginnerChallenge, setBeginnerChallenge] = useState(false);
+    const [beginner, setBeginner] = useState('');
     const [intermediateChallenge, setIntermediateChallenge] = useState(false);
+    const [intermediate, setIntermediate] = useState('');
     const [advancedChallenge, setAdvancedChallenge] = useState(false);
+    const [advanced, setAdvanced] = useState('');
+
+    const fetchRandomBeginner = async () => {
+        try {
+          const response = await fetch('/beginner.txt'); 
+          const text = await response.text();
+          const lines = text.split('\n');
+          const randomIndex = Math.floor(Math.random() * lines.length);
+          setBeginner(lines[randomIndex].trim());
+        } catch (error) {
+          console.error('Error fetching the text file:', error);
+        }
+    };
+    const fetchRandomIntermediate = async () => {
+        try {
+          const response = await fetch('/intermediate.txt'); 
+          const text = await response.text();
+          const lines = text.split('\n');
+          const randomIndex = Math.floor(Math.random() * lines.length);
+          setIntermediate(lines[randomIndex].trim());
+        } catch (error) {
+          console.error('Error fetching the text file:', error);
+        }
+    };
+    const fetchRandomAdvanced = async () => {
+        try {
+          const response = await fetch('/advanced.txt'); 
+          const text = await response.text();
+          const lines = text.split('\n');
+          const randomIndex = Math.floor(Math.random() * lines.length);
+          setAdvanced(lines[randomIndex].trim());
+        } catch (error) {
+          console.error('Error fetching the text file:', error);
+        }
+    };
+
     const toggleChallenge = () => {
         setOpenChallenge(true);
-        setBeginnerChallenge(true);
+        toggleBeginner();
     }
     const toggleBeginner = () => {
         setBeginnerChallenge(true);
         setIntermediateChallenge(false);
         setAdvancedChallenge(false);
+        fetchRandomBeginner();
     }
     const toggleIntermediate = () => {
         setIntermediateChallenge(true);
         setBeginnerChallenge(false);
         setAdvancedChallenge(false);
+        fetchRandomIntermediate();
     }
     const toggleAdvanced = () => {
         setAdvancedChallenge(true);
         setBeginnerChallenge(false);
         setIntermediateChallenge(false);
+        fetchRandomAdvanced();
     }
   return (
     <div>
@@ -41,27 +85,30 @@ function Home() {
                 START TODAY. START NOW.
             </div>
             <div className="challengeButton">
-                <button onClick={toggleChallenge}>+ VIEW TODAY'S CHALLENGE</button>
+                <button className="challengeButton" id={openChallenge ? "true" : "false"} onClick={toggleChallenge}>+ VIEW TODAY'S CHALLENGE</button>
             </div>
             <div className="hiddenChallenge" id={openChallenge ? "open" : "close"}>
                 <div className="tabs">
-                    <span className="beginner" onClick={toggleBeginner}>Beginner</span>
-                    <span className="intermediate" onClick={toggleIntermediate}>Intermediate</span>
-                    <span className="advanced" onClick={toggleAdvanced}>Advanced</span>
+                    <span className="beginnerChallenge" id={beginnerChallenge ? 'active' : 'inactive'} onClick={toggleBeginner}>Beginner</span>
+                    <span className="intermediateChallenge" id={intermediateChallenge ? 'active' : 'inactive'} onClick={toggleIntermediate}>Intermediate</span>
+                    <span className="advancedChallenge" id={advancedChallenge ? 'active' : 'inactive'} onClick={toggleAdvanced}>Advanced</span>
                 </div>
                 <div className="beginnerChallenge" id={beginnerChallenge ? "open" : "close"}>
-                    <div> 
-                        <b>5 Km Outdoor Run</b> Do 20 push-ups
+                    <div className="leftText"> 
+                        <b>{beginner}</b>
+                        <p>{formattedDate}</p>
                     </div>
                 </div>
                 <div className="intermediateChallenge" id={intermediateChallenge ? "open" : "close"}>
-                    <div>
-                        <b>10 Km Outdoor Run</b> Do 30 push-ups
+                    <div className="leftText">
+                        <b>{intermediate}</b>
+                        <p>{formattedDate}</p>
                     </div>
                 </div>
                 <div className="advancedChallenge" id={advancedChallenge ? "open" : "close"}>
-                    <div>
-                        <b>15 Km Outdoor Run</b> Do 40 push-ups
+                    <div className="leftText">
+                        <b>{advanced}</b>
+                        <p>{formattedDate}</p>
                     </div>
                 </div>
             </div>
