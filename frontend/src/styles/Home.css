@@ -22,6 +22,85 @@
     border-bottom: 1px solid 
 }
 
+.today {
+    border-bottom: 1px solid black;
+}
+
+.startTitle {
+    padding-top: 3.75rem;
+    font-size: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    line-height: 0.85em;
+}
+
+.challengeButton button{
+    padding: 0.8rem 1rem;  
+    margin-top: 2rem;      
+    margin-bottom: 3rem;
+    background-color: #000000;    
+    color: #ffffff;               
+    border: none;                
+    border-radius: 150px;           
+    cursor: pointer;  
+}
+
+.hiddenChallenge#close {
+    display: none;
+}
+
+.hiddenChallenge#open {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 3rem;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 1px 25px rgba(0, 0, 0, 0.1); 
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tabs span {
+    padding-top: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #333;
+    width: 13%;
+    cursor: pointer;
+}
+
+.beginnerChallenge#open {
+    text-align: left;
+    padding: 4rem;
+}
+
+.beginnerChallenge#close {
+    display: none;
+}
+
+.intermediateChallenge#open {
+    text-align: left;
+    padding: 4rem;
+}
+
+.intermediateChallenge#close {
+    display: none;
+}
+
+.advancedChallenge#open {
+    text-align: left;
+    padding: 4rem;
+}
+
+.advancedChallenge#close {
+    display: none;
+}
+
 @media screen and (max-width: 788px) {
     .slogan {
         font-size: 65px;
