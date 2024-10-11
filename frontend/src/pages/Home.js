@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import '../styles/Home.css';
 import '../assets/about.txt';
-import { getUrl } from '../util/constants.js';
+import { getUrl } from '../util/host.js';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const today = new Date();
@@ -47,6 +48,10 @@ function Home() {
         setBeginnerChallenge(false);
         setIntermediateChallenge(false);
     }
+
+    const addLogRedirect = () => {
+        return '/dashboard';
+    }
   return (
     <div>
         <div className="description">
@@ -87,6 +92,9 @@ function Home() {
                         <b>{advanced}</b>
                         <p>{formattedDate}</p>
                     </div>
+                </div>
+                <div className='complete'>
+                    <button><a href={addLogRedirect()}>+ ADD TO LOG</a></button>
                 </div>
             </div>
         </div>
