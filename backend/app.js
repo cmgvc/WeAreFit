@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     res.send('WeAreFit Backend API');
 })
 
-app.listen(port, '0.0.0.0', async () => {
+app.listen(PORT, '0.0.0.0', async () => {
     console.log('Server is running on port ' + port);
     // await generateDailyChallenge(); // this is for testing purposes
 })
