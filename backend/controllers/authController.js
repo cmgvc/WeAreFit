@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User.js');
+const {User} = require('../models/User');
 
 // Register a new user
 exports.register = async (req, res) => {
@@ -8,9 +8,13 @@ exports.register = async (req, res) => {
 
     try {
         // Check if the email already exists
-        const existingUser = await User.findOne({ email: email });
-        if (existingUser) {
+        const existingEmail = await User.findOne({ email: email });
+        if (existingEmail) {
             return res.status(400).json({ error: 'Email already exists' });
+        }
+        const existingUsername = await User.findOne({ username: username });
+        if (existingUsername) {
+            return res.status(400).json({ error: 'Username already exists' });
         }
 
         // Hash password before saving in the database
