@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 import Logo from '../assets/WeAreFitLogo.svg';
 import ReorderIcon from '@mui/icons-material/Reorder';
+import PersonIcon from '@mui/icons-material/Person';
+import Person from '@mui/icons-material/Person';
 
 function Navbar() {
 
@@ -31,7 +33,7 @@ function Navbar() {
             <Link to="/past">PAST CHALLENGES</Link>
         </div>
         <div className='join'>
-            <button><Link to="/register">+ REGISTER</Link></button>
+            <button><PersonIcon /><Link to="/register">REGISTER</Link></button>
         </div>
     </div>
   )

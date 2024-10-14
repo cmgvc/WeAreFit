@@ -27,13 +27,17 @@
 }
 
 .join button {
-    padding: 0.5rem 1rem;        
+    padding: 0.7rem 1rem;        
     margin-bottom: 0.5rem;
-    background-color: #000000;    
+    background-color: #000000;
+    display: flex;    
+    align-items: center;
+    justify-content: center;
     color: #ffffff;               
     border: none;                
     border-radius: 150px;           
-    cursor: pointer;              
+    cursor: pointer;    
+    gap: 5px;          
 
     &:hover {
         background-color: #282828;
