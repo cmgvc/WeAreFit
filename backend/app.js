@@ -7,6 +7,8 @@ const PORT = 8080;
 const cron = require('./utils/cronJob');
 const { generateDailyChallenge } = require('./controllers/challengeController');
 
+dotenv.config();
+
 app.use(express.json()); // parse incoming JSON data
 app.use(cors());   
 
