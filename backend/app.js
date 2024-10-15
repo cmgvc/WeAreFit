@@ -4,6 +4,7 @@ const connectDB = require('./config/db.js');
 const cors = require('cors');
 const app   = express();
 const PORT = process.env.PORT || 8080;
+const cron = require('./utils/cronJob');
 const { generateDailyChallenge } = require('./controllers/challengeController');
 
 dotenv.config();
@@ -27,6 +28,6 @@ app.get('/', (req, res) => {
 })
 
 app.listen(PORT, '0.0.0.0', async () => {
-    console.log('Server is running on port ' + port);
+    console.log('Server is running on port ' + PORT);
     // await generateDailyChallenge(); // this is for testing purposes
 })
