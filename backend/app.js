@@ -5,7 +5,7 @@ const cors = require('cors');
 const app   = express();
 const https = require('https');
 const fs = require('fs');
-const PORT = 443;
+const PORT = 8080;
 const cron = require('./utils/cronJob');
 const { generateDailyChallenge } = require('./controllers/challengeController');
 
@@ -15,13 +15,6 @@ app.use(express.json()); // parse incoming JSON data
 app.use(cors());   
 
 connectDB();
-
-const options = {
-    key: fs.readFileSync('/etc/ssl/myapp/private.key'),
-    cert: fs.readFileSync('/etc/ssl/myapp/certificate.crt'),
-};
-
-const server = https.createServer(options, app);
 
 const authRoutes = require('./routes/authRoutes.js');
 const progressRoutes = require('./routes/progressRoutes.js');
