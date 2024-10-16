@@ -16,7 +16,7 @@ function Home() {
 
     const fetchRandomWorkout = async () => {
         try {
-            const response = await fetch(`${getUrl()}/api/challenge`); 
+            const response = await fetch(`http://18.191.153.252:8080/api/challenge`); 
             const data = await response.json();
             setBeginner(data.beginnerWorkout);
             setIntermediate(data.intermediateWorkout);
