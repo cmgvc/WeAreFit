@@ -73,3 +73,26 @@
     text-align: left;
     font-weight: bold;
 }
+
+@media screen and (max-width: 768px) {
+
+    .footer {
+        padding: 0;
+    }
+    .footer-account {
+        margin-right: 0;
+        padding-left: 0;
+        padding: 1rem;
+    }
+
+    .footer-about {
+        margin-right: 0;
+        padding: 1rem;
+    }
+
+    .socials {
+        padding: 1rem;
+        padding-right: 2rem
+    }
+    
+}
