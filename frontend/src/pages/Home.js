@@ -73,7 +73,7 @@ function Home() {
                 START TODAY. START NOW.
             </div>
             <div className="challengeButton">
-                {loading ? (<LoadingButton loading />) 
+                {loading ? (<LoadingButton loading style={{ marginBottom: '3rem' }}/>) 
                             : (<button className="challengeButton" id={openChallenge ? "true" : "false"} onClick={toggleChallenge}>
                                 + VIEW TODAY'S CHALLENGE
                             </button>)
