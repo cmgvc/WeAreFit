@@ -1,0 +1,182 @@
+.register-container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    margin: auto; 
+    margin-bottom: 3rem;
+    padding: 20px;
+    max-width: 400px;
+    box-shadow: 0 1px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    align-items: center; 
+}
+
+.register-container p {
+    border: none;
+}
+
+.tabs {
+    display: flex;
+    width: 70%;
+    margin-bottom: 0;
+    a {
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
+.tabs#login {
+    .login-tab p {
+        color: black;
+        border-bottom: 1px solid black;
+        cursor: pointer;
+    }
+    .register-tab p {
+        color: #838383;
+        border-bottom: 1px solid #acacac;
+        cursor: pointer;
+        &:hover {
+            color: black;
+            border-bottom: 1px solid black;
+        }
+    }
+}
+
+.tabs#register {
+    .login-tab p {
+        color: #838383;
+        border-bottom: 1px solid #acacac;
+        cursor: pointer;
+        &:hover {
+            color: black;
+            border-bottom: 1px solid black;
+        }
+    }
+    .register-tab p {
+        color: black;
+        border-bottom: 1px solid black;
+        cursor: pointer;
+    }
+}
+
+.user-field,
+.email-field,
+.username-field,
+.password {
+    margin: 0;
+    width: 55%;
+    border: 1px solid #ccc; 
+}
+
+.register-container#register  {
+    .user {
+        visibility: hidden;
+        display: none;
+        height: 0; 
+    }
+    .user-field {
+        visibility: hidden;
+        display: none;
+        height: 0; 
+    }
+
+    .username {
+        visibility: visible;
+        margin-top: -15px; 
+        margin-bottom: 15px;
+    }
+    .email {
+        visibility: visible;
+        margin-top: -15px; 
+        margin-bottom: 15px;
+    }
+}
+
+.register-container#login {
+    .username {
+        visibility: hidden;
+        display: none;
+        height: 0; 
+    }
+    .username-field {
+        visibility: hidden;
+        display: none;
+        height: 0; 
+    }
+    .email {
+        visibility: hidden;
+        display: none;
+        height: 0; 
+    }
+    .email-field {
+        visibility: hidden;
+        display: none;
+        height: 0; 
+    }
+}
+
+.auth-button button{
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;        
+    margin-bottom: 0.5rem;
+    background-color: #000000;    
+    color: #ffffff;               
+    border: none;                
+    border-radius: 150px;           
+    cursor: pointer;              
+
+    &:hover {
+        background-color: #282828;
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+}
+
+.popup-content {
+    background: rgb(255, 255, 255);
+    width: 30%;
+    padding: 5px;
+    padding-left: 8rem;
+    padding-top: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 15px 15px 15px;
+    border: none;
+  }
+  .popup-arrow {
+    color: rgb(255, 255, 255);
+  }
+  [role='tooltip'].popup-content {
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+  }
+  
+  .popup-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  [data-popup='tooltip'].popup-overlay {
+    background: transparent;
+  }
+
+.popup-button {
+    padding: 0.5rem 1rem;   
+    margin-bottom: 0.5rem;     
+    margin-top: 0.5rem;
+    margin-left: 3rem;
+    background-color: #000000;    
+    color: #ffffff;               
+    border: none;                
+    border-radius: 150px;           
+    cursor: pointer;              
+
+    &:hover {
+        background-color: #282828;
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+}
