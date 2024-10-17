@@ -1,8 +1,11 @@
 import React from 'react';
+import { handleLogout } from '../services/auth';
 
 function Account () {
     return (
-        <div></div>
+        <div>
+            <button onClick={() => handleLogout()}>Logout</button>
+        </div>
     )
 }
 

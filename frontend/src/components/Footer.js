@@ -9,8 +9,8 @@ function Footer() {
         <div className="footer-links">
             <div className="footer-account">
                 <h4>MY ACCOUNT</h4>
-                <a href="/login">Sign in</a>
-                <a href="/register">Register</a>
+                <a href="/auth">Sign in</a>
+                <a href="/auth">Register</a>
                 <a href="/account">Account</a>
             </div>
             <div className="footer-about">

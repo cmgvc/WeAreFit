@@ -56,7 +56,7 @@ function Home() {
     }
 
     const addLogRedirect = '/dashboard';
-    const joinNowRedirect = '/account';
+    const joinNowRedirect = '/auth';
 
   return (
     <div>
