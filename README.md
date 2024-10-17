@@ -83,7 +83,7 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 
 ## Usage
 
-- **Access the App**: Open your web browser and navigate to `http://localhost:3000` (or the port specified in your configuration) to access the WeAreFit web app.
+- **Access the App**: Open your web browser and navigate to `https://we-are-fit.vercel.app/` (or the port specified in your configuration) to access the WeAreFit web app.
 - **Create an Account**: Sign up or log in to start participating in daily challenges and tracking your progress.
 - **Participate in Challenges**: Complete daily fitness challenges and share your results with friends.
 
@@ -97,11 +97,11 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
      npm run build
      ```
 
-   - Deploy the built files to Netlify or Vercel.
+   - Deploy the built files to Vercel.
 
 2. **Backend Deployment**
 
-   - Deploy the backend to Heroku, AWS, or your chosen cloud provider.
+   - Deploy the backend to Render, AWS, or your chosen cloud provider.
 
 ## Contributing
 
