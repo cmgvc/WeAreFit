@@ -15,7 +15,7 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 - **Frontend**: React.js
 - **Backend**: Node.js with Express
 - **Database**: MongoDB
-- **Deployment**: Vercel for frontend, AWS for backend
+- **Deployment**: Vercel for frontend, Render for backend
 
 ## Getting Started
 
