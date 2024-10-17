@@ -2,7 +2,6 @@
     justify-content: left;
     padding-left: 50px;
     padding-right: 50px;
-    
 }
 
 .slogan {
@@ -35,7 +34,7 @@
 }
 
 .challengeButton button#false{
-    padding: 0.8rem 1rem;  
+    padding: 1rem 1.5rem;  
     margin-top: 2rem;      
     margin-bottom: 3rem;
     background-color: #000000;    
@@ -179,9 +178,9 @@
         }
     }
 }
+
 .connect {
     display: flex;
-    justify-content: center;
     padding-top: 3.75rem;
 }
 
@@ -191,9 +190,9 @@
 }
 
 .connectButton button {
-    padding: 1rem 1.5rem;  
+    padding: 0.8rem 1.3rem;  
     margin-top: 1.5rem;
-    margin-right: 3rem; 
+    margin-left: 5rem;
     background-color: #000000;    
     color: #ffffff;               
     border: none;                
@@ -209,7 +208,8 @@
 
 .connectTitle {
     font-size:75px;
-    padding-left: 50px;
+    margin-left: auto;
+    margin-right: auto;
     line-height: 0.85em;
 }
 
@@ -219,7 +219,6 @@
     padding-left: 50px;
     line-height: 27px;
     text-align: left;
-    width: 1000px;
     margin: auto;
     padding-bottom: 50px;
 }
@@ -234,11 +233,41 @@
         line-height: 20px;
     }
 
+    .startTitle {
+        font-size: 50px;
+    }
+
+    .connect {
+        display: block;
+    }
+
+    .connectButton button {
+        margin-top: 0.5rem;
+        padding: 1rem 1.5rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .connectButton a{
+        display:flex;
+    }
+
+    .connectTitle {
+        padding-top: 3rem;
+        font-size: 50px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .connectDescription {
+        font-size: small;
+    }
+
 }
 
 @media screen and (max-width: 420px) {
     .slogan {
         font-size: 58px;
     }
-
+    
 }
