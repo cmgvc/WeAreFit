@@ -4,6 +4,8 @@ import '../assets/about.txt';
 import { getUrl } from '../util/host.js';
 import { formattedDate } from '../util/date.js';
 import PersonIcon from '@mui/icons-material/Person';
+// import { set } from 'mongoose';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 function Home() {
     const [openChallenge, setOpenChallenge] = useState(false);
@@ -13,10 +15,12 @@ function Home() {
     const [intermediate, setIntermediate] = useState('');
     const [advancedChallenge, setAdvancedChallenge] = useState(false);
     const [advanced, setAdvanced] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const url = getUrl();
 
     const fetchRandomWorkout = async () => {
+        setLoading(true);
         try {
             const response = await fetch(`https://wearefit.onrender.com/api/challenge`); 
             const data = await response.json();
@@ -25,13 +29,15 @@ function Home() {
             setAdvanced(data.advancedWorkout);
         } catch (error) {
             console.error('Error fetching the text file:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
-    const toggleChallenge = () => {
+    const toggleChallenge = async () => {
+        await fetchRandomWorkout();
         setOpenChallenge(true);
         toggleBeginner();
-        fetchRandomWorkout();
     }
     const toggleBeginner = () => {
         setBeginnerChallenge(true);
@@ -48,6 +54,7 @@ function Home() {
         setBeginnerChallenge(false);
         setIntermediateChallenge(false);
     }
+
     const addLogRedirect = '/dashboard';
     const joinNowRedirect = '/account';
 
@@ -66,7 +73,11 @@ function Home() {
                 START TODAY. START NOW.
             </div>
             <div className="challengeButton">
-                <button className="challengeButton" id={openChallenge ? "true" : "false"} onClick={toggleChallenge}>+ VIEW TODAY'S CHALLENGE</button>
+                {loading ? (<LoadingButton loading />) 
+                            : (<button className="challengeButton" id={openChallenge ? "true" : "false"} onClick={toggleChallenge}>
+                                + VIEW TODAY'S CHALLENGE
+                            </button>)
+                }            
             </div>
             <div className="hiddenChallenge" id={openChallenge ? "open" : "close"}>
                 <div className="tabs">
