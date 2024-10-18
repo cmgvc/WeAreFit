@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { formattedDate } from '../util/date.js';
 import { fetchRandomWorkout, completeChallenge, getStreak } from '../services/api'; 
-import '../styles/Dashboard.css';
+import '../styles/ChallengeContainer.css';
 import Popup from 'reactjs-popup';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { getUsername } from '../services/auth.js';
