@@ -4,8 +4,8 @@ import '../assets/about.txt';
 import { getUrl } from '../util/host.js';
 import { formattedDate } from '../util/date.js';
 import PersonIcon from '@mui/icons-material/Person';
-// import { set } from 'mongoose';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { fetchRandomWorkout } from '../services/api.js';
 
 function Home() {
     const [openChallenge, setOpenChallenge] = useState(false);
@@ -19,25 +19,20 @@ function Home() {
 
     const url = getUrl();
 
-    const fetchRandomWorkout = async () => {
-        setLoading(true);
+    const toggleChallenge = async () => {
+        setLoading(true); 
         try {
-            const response = await fetch(`https://wearefit.onrender.com/api/challenge`); 
-            const data = await response.json();
+            const data = await fetchRandomWorkout(); 
             setBeginner(data.beginnerWorkout);
             setIntermediate(data.intermediateWorkout);
             setAdvanced(data.advancedWorkout);
         } catch (error) {
-            console.error('Error fetching the text file:', error);
+            console.error('Error fetching the workout data:', error);
         } finally {
-            setLoading(false);
+            setLoading(false); 
         }
-    };
-
-    const toggleChallenge = async () => {
-        await fetchRandomWorkout();
         setOpenChallenge(true);
-        toggleBeginner();
+        toggleBeginner(); 
     }
     const toggleBeginner = () => {
         setBeginnerChallenge(true);

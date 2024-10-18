@@ -201,4 +201,25 @@
 
 .unauth {
     margin: 15rem;
+    button {
+        padding: 1rem 1.5rem;   
+        margin-bottom: 0.5rem;     
+        margin-top: 0.5rem;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: black;    
+        color: #ffffff;               
+        border: none;                
+        border-radius: 150px;           
+        cursor: pointer;              
+
+        &:hover {
+            background-color: #830505;
+        }
+
+        a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+    }
 }
