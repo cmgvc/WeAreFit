@@ -43,6 +43,12 @@
     }
 }
 
+.tabs#login .login-tab p {
+    color: black;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+}
+
 .tabs#register {
     .login-tab p {
         color: #838383;
