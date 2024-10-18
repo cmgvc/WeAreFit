@@ -33,9 +33,8 @@ export const getStreak = async (userId) => {
             body: JSON.stringify({ userId })
         });
         const data = await response.json();
-        console.log(data)
         return data.streak;
     } catch (error) {
         console.error('Error completing the challenge:', error);
     }
-}
+}   

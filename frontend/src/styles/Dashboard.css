@@ -43,9 +43,18 @@
     box-shadow: 0 1px 25px rgba(0, 0, 0, 0.1); 
 }
 
+.progress-dates {
+    h2 {
+        font-size: 4rem;
+        margin-left: 1rem;
+        line-height: 5rem;
+        font-weight: 500;
+    }
+}
+
 .react-calendar {
     margin: 4rem auto; 
-    margin-right: 15rem;
+    margin-top: -1rem;
     border: none !important;
 }
 

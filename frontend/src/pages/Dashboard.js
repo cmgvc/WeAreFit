@@ -21,7 +21,7 @@ function Dashboard() {
     const [loading, setLoading] = useState(false); 
     const [auth, setAuth] = useState(false);
     const user = getUsername();
-    const streak = getStreak(user).streak;
+    const [streak, setStreak] = useState(0);
 
     useEffect(() => {
         const loadWorkoutChallenges = async () => {
@@ -37,7 +37,6 @@ function Dashboard() {
                 setLoading(false);
             }
         };
-
         loadWorkoutChallenges();
     }, []);
 
@@ -47,6 +46,18 @@ function Dashboard() {
             setAuth(true);
         }
     }, []);
+
+    useEffect(() => {
+        const fetchStreak = async () => {
+            try {
+                const streakValue = await getStreak(user);
+                setStreak(streakValue);
+            } catch (error) {
+                console.error('Error fetching streak:', error);
+            }
+        };
+        fetchStreak();
+    }, [auth, user]);
 
     const toggleBeginner = () => {
         setBeginnerChallenge(true);
@@ -133,7 +144,7 @@ function Dashboard() {
                 </div>
             )}
             { auth ? 
-                <div> 
+                <div className="progress-dates"> 
                     <h2>{streak} DAY STREAK</h2>
                     <Calendar
                         // onChange={handleDateChange}
