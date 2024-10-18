@@ -5,10 +5,9 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 ## Features
 
 - **Daily Fitness Challenges**: Receive and complete daily fitness challenges.
-- **Social Sharing**: Share workout results and progress with friends.
 - **Progress Tracking**: Monitor your fitness progress and achievements.
+- **Social Sharing**: Share workout results and progress with friends.
 - **Leaderboards**: Compete with friends and view global leaderboards.
-- **Notifications and Reminders**: Stay motivated with timely reminders.
 
 ## Tech Stack
 
@@ -21,7 +20,8 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 
 ### Prerequisites
 
-- Node.js (for backend and frontend development)
+- Node.js
+- React.js
 - MongoDB
 - Git
 
@@ -105,7 +105,7 @@ WeAreFit is a web-based fitness app designed to encourage users to engage in dai
 
 ## Contributing
 
-We welcome contributions to WeAreFit! Please follow these steps to contribute:
+Please follow these steps to contribute:
 
 1. Fork the repository.
 2. Create a new branch for your changes.
@@ -116,8 +116,8 @@ We welcome contributions to WeAreFit! Please follow these steps to contribute:
 
 ## Contact
 
-For any inquiries or support, please contact me at cmgvc.
+Contact me at cmgvc.
 
 ---
 
-Thank you for using WeAreFit! We hope you enjoy staying fit and connected
+Thank you for using WeAreFit! I hope you enjoy staying fit and connected
