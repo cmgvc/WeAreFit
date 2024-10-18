@@ -17,7 +17,7 @@ export const handleLogout = () => {
 
 export async function login(email, password) {
     try {
-        const response = await fetch(`${getUrl()}/api/auth/login`, {
+        const response = await fetch(`https://wearefit.onrender.com/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ export async function login(email, password) {
 
 export async function register(username, email, password) {
     try {
-        const response = await fetch(`${getUrl()}/api/auth/register`, {
+        const response = await fetch(`https://wearefit.onrender.com/api/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
