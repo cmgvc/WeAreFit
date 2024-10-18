@@ -70,6 +70,7 @@ const ChallengeContainer = () => {
         const difficulty = beginnerChallenge ? 'beginner' : intermediateChallenge ? 'intermediate' : 'advanced';
         if (!auth) {
             window.location.href = '/auth';
+            return;
         }
         try {
             const userId = user;
