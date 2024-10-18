@@ -19,7 +19,8 @@
 .nav a {
     color: #000000;
     text-decoration: none;
-    padding: 0 1rem;       
+    padding: 0 1rem;  
+    cursor: pointer;    
 }
 
 .icon {

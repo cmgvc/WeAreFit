@@ -71,12 +71,13 @@
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
+    margin-left: 6rem;
 }
 
 .tabs span {
     padding-top: 10px;
     cursor: pointer;
-    
+    text-align: center;
     width: 13%;
     cursor: pointer;
 }
