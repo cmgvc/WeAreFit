@@ -206,3 +206,17 @@
     color: #666; 
     cursor: not-allowed; 
 }
+
+@media screen and (max-width: 768px) {
+    .challenge {
+        width: 90%;
+    }
+    .tabs {
+        gap: 50px;
+        
+    }
+    .tabs span {
+        width: 100%;
+        margin-left: -1.5rem;
+    }
+}
