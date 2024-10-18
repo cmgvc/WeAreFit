@@ -42,7 +42,7 @@ function Navbar() {
             </div>
             <div className='join'>
                     {username ? (
-                        <button><PersonIcon /><Link to="/account">{username}</Link></button>
+                        <button><PersonIcon /><Link to="/auth">{username}</Link></button>
                     ) : (
                         <button><PersonIcon /><Link to="/auth">SIGN IN</Link></button>
                     )}
