@@ -145,32 +145,42 @@
 .popup-content {
     background: rgb(255, 255, 255);
     width: 30%;
-    padding: 5px;
-    padding-left: 8rem;
-    padding-top: 1rem;
+    padding: 1rem;
     box-shadow: rgba(0, 0, 0, 0.16) 15px 15px 15px;
     border: none;
-  }
-  .popup-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center; 
+}
+.popup-arrow {
     color: rgb(255, 255, 255);
-  }
-  [role='tooltip'].popup-content {
+}
+[role='tooltip'].popup-content {
     width: 200px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
-  }
+}
   
-  .popup-overlay {
+.popup-overlay {
     background: rgba(0, 0, 0, 0.5);
-  }
-  [data-popup='tooltip'].popup-overlay {
+}
+[data-popup='tooltip'].popup-overlay {
     background: transparent;
-  }
+}
+
+.error-message {
+    margin-top: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .popup-button {
     padding: 0.5rem 1rem;   
     margin-bottom: 0.5rem;     
     margin-top: 0.5rem;
-    margin-left: 3rem;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #000000;    
     color: #ffffff;               
     border: none;                

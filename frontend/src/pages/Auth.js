@@ -18,6 +18,7 @@ function Auth() {
     try {
       const result = await register(username, email, password); 
       setEmail('');
+      setUsername('');
       setPassword('');
       console.log(result); 
       if (result.error) {
@@ -53,23 +54,43 @@ function Auth() {
       <div className="register-container" id={authType ? "login" : "register"}>
           <div className="tabs" id={authType ? "login" : "register"}>
               <div className="login-tab">
-                <p onClick={() => setAuthType(true)}>Login</p>
+                <p onClick={() => {setAuthType(true); setEmail(''); setUsername(''); setPassword('')}}>Login</p>
               </div>
               <div className="register-tab">
-                  <p onClick={() => setAuthType(false)}>Register</p>
+                  <p onClick={() => {setAuthType(false); setEmail(''); setUsername(''); setPassword('')}}>Register</p>
               </div>
           </div>
           <p className="user">Email</p>
-          <input className="user-field" type="text" id="user" name="user" onChange={(e) => setEmail(e.target.value)}/>&nbsp;
+          <input className="user-field" 
+                type="text" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder='e.g. john_doe@gmail.com'
+            />&nbsp;
 
           <p className="username">Username</p>
-          <input className="username-field" type="text" id="username" name="username" onChange={(e) => setUsername(e.target.value)}/>&nbsp;
+          <input className="username-field" 
+                type="text" 
+                value={username} 
+                onChange={(e) => setUsername(e.target.value)} 
+                placeholder="e.g. john_doe"
+            />&nbsp;
 
           <p className="email">Email</p>
-          <input className="email-field" type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)}/>&nbsp;
+          <input className="email-field" 
+                type="text" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="e.g. john_doe@gmail.com"
+                />&nbsp;
 
           <p className="password">Password</p>
-          <input className="password" type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}/>
+          <input className="password" 
+                    type="password" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="e.g. password123"
+            />
 
           <div className="auth-button">
             {authType ? 
@@ -79,7 +100,7 @@ function Auth() {
           
       </div>
       <Popup className="popup" open={isPopupOpen} onClose={() => setIsPopupOpen(false)} position="right center" closeOnDocumentClick={false}>
-          <div>{errorMessage}</div>
+          <div className="error-message">{errorMessage}</div>
           <button className="popup-button" onClick={() => setIsPopupOpen(false)}>Close</button>
       </Popup>
     </div>
