@@ -38,3 +38,18 @@ export const getStreak = async (userId) => {
         console.error('Error completing the challenge:', error);
     }
 }   
+
+export const getProgress = async (userId) => {
+    try {
+        const response = await fetch(`https://wearefit.onrender.com/api/progress`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId })
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching the progress:', error);
+    }
+}

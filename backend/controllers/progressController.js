@@ -27,10 +27,17 @@ exports.completeTask = async (req, res) => {
         yesterday.setDate(yesterday.getDate() - 1);
 
         // Handle streak logic
-        if (user.lastCompletedDate && user.lastCompletedDate.toDateString() === yesterday.toDateString()) {
-            user.streak += 1;
+        if (user.lastCompletedDate) {
+            const lastCompletedDateString = user.lastCompletedDate.toDateString();
+            if (lastCompletedDateString === yesterday.toDateString()) {
+                user.streak += 1; 
+            } else if (lastCompletedDateString === todayString) {
+                // do nothing
+            } else {
+                user.streak = 1; 
+            }
         } else {
-            user.streak = 1;
+            user.streak = 1; 
         }
         user.lastCompletedDate = today;
         await user.save();
@@ -76,28 +83,29 @@ exports.getProgressByDate = async (req, res) => {
 
 // Handle update progress difficulty
 exports.updateProgress = async (req, res) => {
-    const {userId, taskId, dateCompleted, difficulty} = req.body;
-    
+    const { userId, taskId, dateCompleted, difficulty } = req.body;
+
     try {
         const user = await findUser(userId);
         if (!user) {
-            return res.status(404).json({error: 'User not found'});
+            return res.status(404).json({ error: 'User not found' });
         }
 
-        // Find the progress for the user for that date 
-        const progress = await Progress.findOne({userId: user._id, taskId, dateCompleted});
-        if (!progress) {
-            return this.completeTask(req, res);
-        }  
+        // Find the existing progress for the user for that date
+        const progress = await Progress.findOne({ userId: user._id, taskId, dateCompleted });
 
-        if (progress.difficulty === difficulty) {
-            return res.status(400).json({error: 'Difficulty already complete for this date'});
+        // If progress exists, delete it
+        if (progress) {
+            await Progress.deleteOne({ userId: user._id, taskId, dateCompleted });
         }
 
-        progress.difficulty = difficulty;
-        await progress.save();
-    } catch (error ) {
-        res.status(500).json({error: 'Server error'});
+        // Now, create a new progress record with the updated difficulty
+        const newProgress = new Progress({ userId: user._id, taskId, dateCompleted, difficulty });
+        await newProgress.save();
+
+        res.status(200).json({ message: 'Progress updated successfully', difficulty });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
     }
 }
 
