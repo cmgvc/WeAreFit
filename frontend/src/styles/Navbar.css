@@ -111,4 +111,8 @@
     .navbar {
         padding: 1.5rem 2rem ;
     }
+
+    .join a {
+        display: none;
+    }
 }
