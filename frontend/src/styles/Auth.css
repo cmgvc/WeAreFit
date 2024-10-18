@@ -17,7 +17,9 @@
 
 .tabs {
     display: flex;
-    width: 70%;
+    justify-content: space-around; 
+    width: 70%; 
+    margin: 0 auto; 
     margin-bottom: 0;
     a {
         text-align: center;
@@ -195,4 +197,8 @@
         color: #ffffff;
         text-decoration: none;
     }
+}
+
+.unauth {
+    margin: 15rem;
 }

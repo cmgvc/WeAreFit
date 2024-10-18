@@ -4,7 +4,6 @@ import '../styles/Navbar.css';
 import Logo from '../assets/WeAreFitLogo.svg';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import PersonIcon from '@mui/icons-material/Person';
-import Person from '@mui/icons-material/Person';
 import { getUsername, isAuthenticated } from '../services/auth';
 
 function Navbar() {
@@ -23,14 +22,6 @@ function Navbar() {
         setOpenLinks(!openLinks);
     }
 
-    const handleAccountClick = () => {
-        if (isAuthenticated()) {
-            navigate('/account');
-        } else {
-            navigate('/auth');
-        }
-    }
-
     return (
         <div className='navbar'>
             <div className='logo'>
@@ -38,7 +29,6 @@ function Navbar() {
             </div>
             <div className='nav'>
                 <Link to="/dashboard">DASHBOARD</Link>
-                <a onClick={handleAccountClick}>ACCOUNT</a>
                 <Link to="/past">PAST CHALLENGES</Link>
             </div>
             <div className='icon'>
@@ -48,7 +38,6 @@ function Navbar() {
             </div>
             <div className='hiddenLinks' id={openLinks ? "open" : "close"}>
                 <Link to="/dashboard">DASHBOARD</Link>
-                <button onClick={handleAccountClick}>ACCOUNT</button>
                 <Link to="/past">PAST CHALLENGES</Link>
             </div>
             <div className='join'>

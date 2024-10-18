@@ -99,11 +99,6 @@
         a:first-child {
             border-bottom: none;  
         }
-        
-        a:last-child {
-            border-top: none;
-        }
-        
     }
 
     .hiddenLinks#close {
