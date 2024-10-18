@@ -1,5 +1,5 @@
 const express = require('express');
-const {completeTask, getProgressByDate, updateProgress, deleteProgress} = require('../controllers/progressController.js')
+const {completeTask, getProgressByDate, updateProgress, deleteProgress, getStreak} = require('../controllers/progressController.js')
 const router = express.Router();
 
 // Add new completed task as new progress
@@ -9,9 +9,12 @@ router.post('/add', completeTask);
 router.post('/', getProgressByDate);
 
 // Update progress difficulty
-router.put('/update/:id', updateProgress);
+router.post('/update', updateProgress);
 
 // Delete progress
 router.delete('/delete/:id', deleteProgress);
+
+// Get user progress streak
+router.post('/streak', getStreak);
 
 module.exports = router;

@@ -5,7 +5,6 @@ const { findUser } = require('../models/User.js');
 // Handle complete a task
 exports.completeTask = async (req, res) => {
     const {userId, taskId, dateCompleted, difficulty} = req.body;
-
     try {
         const user = await findUser(userId);
         if (!user) {
@@ -77,8 +76,7 @@ exports.getProgressByDate = async (req, res) => {
 
 // Handle update progress difficulty
 exports.updateProgress = async (req, res) => {
-    const userId = req.params.id;
-    const { dateCompleted, difficulty} = req.body;
+    const {userId, taskId, dateCompleted, difficulty} = req.body;
     
     try {
         const user = await findUser(userId);
@@ -87,7 +85,7 @@ exports.updateProgress = async (req, res) => {
         }
 
         // Find the progress for the user for that date 
-        const progress = await Progress.findOne({userId: user._id, dateCompleted});
+        const progress = await Progress.findOne({userId: user._id, taskId, dateCompleted});
         if (!progress) {
             return this.completeTask(req, res);
         }  
@@ -124,3 +122,16 @@ exports.deleteProgress = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 }   
+
+exports.getStreak = async (req, res) => {   
+    const { userId } = req.body;
+    try {
+        const user = await findUser(userId);
+        if (!user) {
+            return res.status(404).json({error: 'User not found'});
+        }
+        res.status(200).json({ streak: user.streak });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+}

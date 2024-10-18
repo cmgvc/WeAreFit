@@ -1,10 +1,34 @@
-h1 {
-    font-size: 5rem;
-    line-height: 0.85em;
-    padding-top: 0rem;
-    padding-left: 50px;
-    padding-right: 50px;
+.heading h3 {
+    font-size: 2rem;
     font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.heading h1, h1 {
+    font-size: 5rem;
+    margin-bottom: -3rem;
+    margin-top: 2rem;
+    font-weight: 500;
+}
+
+.heading button {
+    padding: 1rem 1.2rem;    
+    margin-top: 1rem;    
+    background-color: #000000;
+    justify-content: center;
+    color: #ffffff;               
+    border: none;                
+    border-radius: 150px;           
+    cursor: pointer;    
+    &:hover {
+        background-color: #282828;
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: none;
+    }
 }
 
 .challenge {
@@ -17,4 +41,51 @@ h1 {
     width: 80%;
     max-width: 800px;
     box-shadow: 0 1px 25px rgba(0, 0, 0, 0.1); 
+}
+
+.react-calendar {
+    margin: 4rem auto; 
+    margin-right: 15rem;
+    border: none !important;
+}
+
+.react-calendar__month-view__days__day {
+    border-radius: 50%; 
+    width: 50px; 
+    height: 50px; 
+    color: black !important;
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    transition: background-color 0.2s ease; 
+}
+
+.react-calendar__month-view__days__day:hover {
+    background-color: #f0f0f0; 
+}
+
+.react-calendar__tile--active {
+    background-color: #007bff; 
+    color: white; 
+}
+
+.react-calendar__tile--active:hover {
+    background-color: #0056b3;
+}
+
+.react-calendar__navigation__label {
+    font-size: 1.5rem; 
+    font-weight: 500; 
+    color: black !important;
+}
+
+.react-calendar__navigation button {
+    background-color: transparent; 
+    border: none; 
+    color: black; 
+    font-size: 1.2rem;
+}
+
+.react-calendar__navigation button:hover {
+    color: #0056b3;
 }

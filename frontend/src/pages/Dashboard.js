@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { getUsername } from '../services/auth';
 import { formattedDate } from '../util/date.js';
-import { fetchRandomWorkout } from '../services/api'; // Assuming you have this API call centralized
-import LoadingButton from '@mui/lab/LoadingButton'; // Import LoadingButton
+import { fetchRandomWorkout, completeChallenge } from '../services/api'; 
+import LoadingButton from '@mui/lab/LoadingButton'; 
+import Popup from 'reactjs-popup';
 import '../styles/Dashboard.css';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import { getStreak } from '../services/api';
 
 function Dashboard() {
-    const [beginnerChallenge, setBeginnerChallenge] = useState(true); // Start with beginner challenge active
+    const [beginnerChallenge, setBeginnerChallenge] = useState(true); 
     const [beginner, setBeginner] = useState('');
     const [intermediateChallenge, setIntermediateChallenge] = useState(false);
     const [intermediate, setIntermediate] = useState('');
     const [advancedChallenge, setAdvancedChallenge] = useState(false);
     const [advanced, setAdvanced] = useState('');
-    const [loading, setLoading] = useState(false); // Loading state
-
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [loading, setLoading] = useState(false); 
+    const [auth, setAuth] = useState(false);
     const user = getUsername();
+    const streak = getStreak(user).streak;
 
     useEffect(() => {
-        // Fetch the workout challenges when the component mounts
         const loadWorkoutChallenges = async () => {
             setLoading(true);
             try {
@@ -35,7 +41,13 @@ function Dashboard() {
         loadWorkoutChallenges();
     }, []);
 
-    // Functions to toggle challenge levels
+    useEffect(() => { 
+        const token = localStorage.getItem('authToken') !== null;
+        if (token) {
+            setAuth(true);
+        }
+    }, []);
+
     const toggleBeginner = () => {
         setBeginnerChallenge(true);
         setIntermediateChallenge(false);
@@ -54,43 +66,83 @@ function Dashboard() {
         setIntermediateChallenge(false);
     }
 
+    const handleChallengeComplete = async () => {
+        setLoading(true);
+        try {
+            const userId = user;
+            const taskId = beginnerChallenge ? beginner : intermediateChallenge ? intermediate : advanced;
+            const dateCompleted = formattedDate;
+            const difficulty = beginnerChallenge ? 'beginner' : intermediateChallenge ? 'intermediate' : 'advanced';
+            const result = await completeChallenge(userId, taskId, dateCompleted, difficulty);
+            if (result.error) {
+                setErrorMessage(result.error);
+                setIsPopupOpen(true);
+            }
+        } catch (error) {
+            console.error('Error completing the challenge:', error);
+        } finally {
+            setLoading(false);
+        }
+        
+    };
+
     return (
         <div>
-            <h1>Hi there, {user}!</h1>
-                {loading ? (
-                    <LoadingButton loading style={{ marginTop: '3rem', marginBottom: '3rem' }} />
-                ) : (
-                    <div className="challenge">
-                        <div className="tabs">
-                            <span className="beginnerChallenge" id={beginnerChallenge ? 'active' : 'inactive'} onClick={toggleBeginner}>Beginner</span>
-                            <span className="intermediateChallenge" id={intermediateChallenge ? 'active' : 'inactive'} onClick={toggleIntermediate}>Intermediate</span>
-                            <span className="advancedChallenge" id={advancedChallenge ? 'active' : 'inactive'} onClick={toggleAdvanced}>Advanced</span>
-                        </div>
+            {auth ? <h1>Hi there, {user}!</h1> : 
+                <div className="heading">
+                    <h1>Welcome</h1>
+                    <h3>Please sign in</h3>
+                    <button onClick={() => window.location.href = '/auth'}>SIGN IN</button>
+                </div>}
+            {loading ? (
+                <LoadingButton loading style={{ marginTop: '3rem', marginBottom: '3rem' }} />
+            ) : (
+                <div className="challenge">
+                    <div className="tabs">
+                        <span className="beginnerChallenge" id={beginnerChallenge ? 'active' : 'inactive'} onClick={toggleBeginner}>Beginner</span>
+                        <span className="intermediateChallenge" id={intermediateChallenge ? 'active' : 'inactive'} onClick={toggleIntermediate}>Intermediate</span>
+                        <span className="advancedChallenge" id={advancedChallenge ? 'active' : 'inactive'} onClick={toggleAdvanced}>Advanced</span>
+                    </div>
 
-                        <div className="beginnerChallenge" id={beginnerChallenge ? "open" : "close"}>
-                            <div className="leftText"> 
-                                <b>{beginner}</b>
-                                <p>{formattedDate}</p>
-                            </div>
-                        </div>
-                        <div className="intermediateChallenge" id={intermediateChallenge ? "open" : "close"}>
-                            <div className="leftText">
-                                <b>{intermediate}</b>
-                                <p>{formattedDate}</p>
-                            </div>
-                        </div>
-                        <div className="advancedChallenge" id={advancedChallenge ? "open" : "close"}>
-                            <div className="leftText">
-                                <b>{advanced}</b>
-                                <p>{formattedDate}</p>
-                            </div>
-                        </div>
-
-                        <div className='complete'>
-                            <button>+ COMPLETE</button>
+                    <div className="beginnerChallenge" id={beginnerChallenge ? "open" : "close"}>
+                        <div className="leftText"> 
+                            <b>{beginner}</b>
+                            <p>{formattedDate}</p>
                         </div>
                     </div>
-                )}
+                    <div className="intermediateChallenge" id={intermediateChallenge ? "open" : "close"}>
+                        <div className="leftText">
+                            <b>{intermediate}</b>
+                            <p>{formattedDate}</p>
+                        </div>
+                    </div>
+                    <div className="advancedChallenge" id={advancedChallenge ? "open" : "close"}>
+                        <div className="leftText">
+                            <b>{advanced}</b>
+                            <p>{formattedDate}</p>
+                        </div>
+                    </div>
+
+                    <div className='complete'>
+                        <button onClick={handleChallengeComplete}>+ COMPLETE</button>
+                    </div>
+                    <Popup className="popup" open={isPopupOpen} onClose={() => setIsPopupOpen(false)} position="right center" closeOnDocumentClick={false}>
+                        <div className="error-message">{errorMessage}</div>
+                        <button className="popup-button" onClick={() => setIsPopupOpen(false)}>Close</button>
+                    </Popup>
+                </div>
+            )}
+            { auth ? 
+                <div> 
+                    <h2>{streak} DAY STREAK</h2>
+                    <Calendar
+                        // onChange={handleDateChange}
+                        // value={date}
+                        tileContent={({ date, view }) => {
+                        
+                        }}
+                    />
+                </div> : null }
         </div>
     );
 }
