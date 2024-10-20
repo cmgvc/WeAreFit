@@ -1,10 +1,10 @@
 import React from 'react';
-import { handleLogout } from '../services/auth';
+import { logout } from '../services/auth';
 
 function Account () {
     return (
         <div>
-            <button onClick={() => handleLogout()}>Logout</button>
+            <button onClick={() => logout()}>Logout</button>
         </div>
     )
 }

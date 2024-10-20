@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import '../styles/Auth.css';
-import { register, login, handleLogout } from '../services/auth.js';
+import { register, login, logout } from '../services/auth.js';
 import Popup from 'reactjs-popup';
 import { useLocation } from 'react-router-dom';
 
@@ -64,7 +64,7 @@ function Auth() {
     }
 
     const handleLogout = () => {
-        handleLogout();
+        logout();
         setAuth(false);
     }
 

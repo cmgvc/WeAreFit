@@ -9,7 +9,7 @@ export function getUsername() {
     return localStorage.getItem('user');
 }
 
-export const handleLogout = () => {
+export const logout = () => {
     localStorage.removeItem('authToken'); 
     localStorage.removeItem('user');
     window.location.href = '/auth'; 
