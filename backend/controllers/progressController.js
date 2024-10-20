@@ -26,6 +26,8 @@ exports.completeTask = async (req, res) => {
         const yesterday = new Date(today);
         yesterday.setDate(yesterday.getDate() - 1);
 
+
+        user.lastCompletedDate = today;
         // Handle streak logic
         if (user.lastCompletedDate) {
             const lastCompletedDateString = user.lastCompletedDate.toDateString();
@@ -39,7 +41,7 @@ exports.completeTask = async (req, res) => {
         } else {
             user.streak = 1; 
         }
-        user.lastCompletedDate = today;
+        
         await user.save();
         res.status(201).json({message: 'Task completed successfully'});
 

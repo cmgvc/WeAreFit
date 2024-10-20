@@ -30,6 +30,10 @@ function Dashboard() {
         fetchStreak();
     }, [auth, user]);
 
+    useEffect(() => {   
+        
+    }, [auth, user]);
+
     return (
         <div>
             {auth ? <h1>Hi there, {user}!</h1> : 

@@ -12,6 +12,8 @@ export function getUsername() {
 export const logout = () => {
     localStorage.removeItem('authToken'); 
     localStorage.removeItem('user');
+    localStorage.setItem('completedChallengeDifficulty', null);
+    localStorage.setItem('challengeDifficulty', null);
     window.location.href = '/auth'; 
 };
 
