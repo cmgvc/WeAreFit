@@ -27,21 +27,16 @@ exports.completeTask = async (req, res) => {
         yesterday.setDate(yesterday.getDate() - 1);
 
 
-        user.lastCompletedDate = today;
         // Handle streak logic
-        if (user.lastCompletedDate) {
-            const lastCompletedDateString = user.lastCompletedDate.toDateString();
-            if (lastCompletedDateString === yesterday.toDateString()) {
-                user.streak += 1; 
-            } else if (lastCompletedDateString === todayString) {
-                // do nothing
-            } else {
-                user.streak = 1; 
-            }
+        const lastCompletedDateString = user.lastCompletedDate.toDateString();
+        if (lastCompletedDateString === yesterday.toDateString()) {
+            user.streak += 1; 
+        } else if (lastCompletedDateString === todayString) {
+            // do nothing
         } else {
             user.streak = 1; 
         }
-        
+        user.lastCompletedDate = today;
         await user.save();
         res.status(201).json({message: 'Task completed successfully'});
 
