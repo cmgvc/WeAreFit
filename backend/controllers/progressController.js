@@ -89,15 +89,17 @@ exports.updateProgress = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
+        try {
+            // Find the existing progress for the user for that date
+            const progress = await Progress.findOne({ userId: user._id, taskId, dateCompleted });
 
-        // Find the existing progress for the user for that date
-        const progress = await Progress.findOne({ userId: user._id, taskId, dateCompleted });
-
-        // If progress exists then delete it
-        if (progress) {
-            await Progress.deleteOne({ userId: user._id, taskId, dateCompleted });
+            // If progress exists then delete it
+            if (progress) {
+                await Progress.deleteOne({ userId: user._id, taskId, dateCompleted });
+            }
+        } catch (error) {
+            console.log('Progress not found');
         }
-
         // Create a new progress record with the updated difficulty
         const newProgress = new Progress({ userId: user._id, taskId, dateCompleted, difficulty });
         await newProgress.save();
