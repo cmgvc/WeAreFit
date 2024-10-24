@@ -1,7 +1,7 @@
-
+import { getUrl } from '../util/host.js';
 export const fetchRandomWorkout = async () => {
     try {
-        const response = await fetch(`https://wearefit.onrender.com/api/challenge`); 
+        const response = await fetch(`${getUrl()}/api/challenge`); 
         return await response.json();
     } catch (error) {
         console.error('Error fetching the text file:', error);
@@ -10,7 +10,7 @@ export const fetchRandomWorkout = async () => {
 
 export const completeChallenge = async (userId, taskId, dateCompleted, difficulty) => {
     try {
-        const response = await fetch(`https://wearefit.onrender.com/api/progress/update`, {
+        const response = await fetch(`${getUrl()}/api/progress/update`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ export const completeChallenge = async (userId, taskId, dateCompleted, difficult
 
 export const getStreak = async (userId) => {
     try {
-        const response = await fetch(`https://wearefit.onrender.com/api/progress/streak`, {
+        const response = await fetch(`${getUrl()}/api/progress/streak`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,14 +41,16 @@ export const getStreak = async (userId) => {
 
 export const getProgress = async (userId) => {
     try {
-        const response = await fetch(`https://wearefit.onrender.com/api/progress`, {
+        const response = await fetch(`${getUrl()}/api/progress`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ userId })
         });
-        return await response.json();
+        const data =  await response.json();
+        
+        return data.difficulty;
     } catch (error) {
         console.error('Error fetching the progress:', error);
     }
@@ -56,14 +58,17 @@ export const getProgress = async (userId) => {
 
 export const getProgressByDate = async (userId, date) => {
     try {
-        const response = await fetch(`https://wearefit.onrender.com/api/progress`, {
+        const response = await fetch(`${getUrl()}/api/progress`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ userId, date })
         });
-        return await response.json();
+        const data = await response.json();
+        console.log(userId);
+        console.log(data);
+        return data;
     } catch (error) {
         console.error('Error fetching the progress:', error);
     }

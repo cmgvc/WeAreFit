@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { formattedDate } from '../util/date.js';
-import { fetchRandomWorkout, completeChallenge, getStreak } from '../services/api'; 
+import { fetchRandomWorkout, completeChallenge, getProgress, getProgressByDate } from '../services/api'; 
 import '../styles/ChallengeContainer.css';
 import Popup from 'reactjs-popup';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -38,7 +38,7 @@ const ChallengeContainer = () => {
     }, []);
 
     useEffect(() => {
-        const savedDifficulty = localStorage.getItem('completedChallengeDifficulty');
+        const savedDifficulty = getProgressByDate(user, formattedDate);
         if (savedDifficulty) {
             setCompletedChallengeDifficulty(savedDifficulty);
         }

@@ -58,6 +58,7 @@ exports.getProgressByDate = async (req, res) => {
 
         const user = await findUser(userId);
         if (!user) {
+            console.log('User not found');
             return res.status(404).json({error: 'User not found'});
         }
 
@@ -68,6 +69,7 @@ exports.getProgressByDate = async (req, res) => {
         });
 
         if (!progress) {
+            console.log('Progress not found for this date');
             return res.status(404).json({ error: 'Progress not found for this date' });
         }
         res.status(200).json(progress);
@@ -91,15 +93,32 @@ exports.updateProgress = async (req, res) => {
         // Find the existing progress for the user for that date
         const progress = await Progress.findOne({ userId: user._id, taskId, dateCompleted });
 
-        // If progress exists, delete it
+        // If progress exists then delete it
         if (progress) {
             await Progress.deleteOne({ userId: user._id, taskId, dateCompleted });
         }
 
-        // Now, create a new progress record with the updated difficulty
+        // Create a new progress record with the updated difficulty
         const newProgress = new Progress({ userId: user._id, taskId, dateCompleted, difficulty });
         await newProgress.save();
 
+        // Convert dateCompleted to Date object
+        const today = new Date(dateCompleted);
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+
+
+        // Handle streak logic
+        const lastCompletedDateString = user.lastCompletedDate.toDateString();
+        if (lastCompletedDateString === yesterday.toDateString()) {
+            user.streak += 1; 
+        } else if (lastCompletedDateString === todayString) {
+            // do nothing
+        } else {
+            user.streak = 1; 
+        }
+        user.lastCompletedDate = today;
+        await user.save();
         res.status(200).json({ message: 'Progress updated successfully', difficulty });
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
