@@ -44,88 +44,107 @@ exports.completeTask = async (req, res) => {
         res.status(500).json({error: 'Server error'});
     }
 };
-
 // Handle fetching progress by date
 exports.getProgressByDate = async (req, res) => {
     const { userId, dateCompleted } = req.body;
 
-    try {
-        const targetDate = new Date(dateCompleted);
-        targetDate.setHours(0, 0, 0, 0); // Set to start of the day
+    // Check if dateCompleted is valid
+    if (dateCompleted && isNaN(Date.parse(dateCompleted))) {
+        return res.status(400).json({ error: 'Invalid date format' });
+    }
 
+    const dateToUse = dateCompleted ? new Date(dateCompleted) : new Date();
+
+    try {
+        const targetDate = new Date(dateToUse);
+        targetDate.setUTCHours(0, 0, 0, 0); 
         const endDate = new Date(targetDate);
-        endDate.setHours(23, 59, 59, 999); // Set to end of the day
+        endDate.setUTCHours(23, 59, 59, 999); 
 
         const user = await findUser(userId);
         if (!user) {
             console.log('User not found');
-            return res.status(404).json({error: 'User not found'});
+            return res.status(404).json({ error: 'User not found' });
         }
 
         // Find progress for the user on that date
         const progress = await Progress.findOne({
             userId: user._id,
-            dateCompleted: { $gte: targetDate, $lte: endDate }
+            dateCompleted: { $gte: targetDate, $lt: endDate }
         });
+
+        console.log('Progress found:', progress);
 
         if (!progress) {
             console.log('Progress not found for this date');
             return res.status(404).json({ error: 'Progress not found for this date' });
         }
+        
         res.status(200).json(progress);
-
     } catch (error) {
+        console.error('Server error:', error); 
         res.status(500).json({ error: 'Server error' });
     }
 };
 
-
 // Handle update progress difficulty
 exports.updateProgress = async (req, res) => {
-    const { userId, taskId, dateCompleted, difficulty } = req.body;
+    const { userId, taskId, difficulty } = req.body;
+
+    // Get the current date for dateCompleted if not provided
+    const dateCompleted = new Date();
+    
+    // Validate input
+    if (!userId || !taskId) {
+        return res.status(400).json({ error: 'User ID and Task ID are required.' });
+    }
 
     try {
         const user = await findUser(userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        try {
-            // Find the existing progress for the user for that date
-            const progress = await Progress.findOne({ userId: user._id, taskId, dateCompleted });
-
-            // If progress exists then delete it
-            if (progress) {
-                await Progress.deleteOne({ userId: user._id, taskId, dateCompleted });
-            }
-        } catch (error) {
-            console.log('Progress not found');
-        }
-        // Create a new progress record with the updated difficulty
-        const newProgress = new Progress({ userId: user._id, taskId, dateCompleted, difficulty });
-        await newProgress.save();
 
         // Convert dateCompleted to Date object
         const today = new Date(dateCompleted);
-        const yesterday = new Date(today);
-        yesterday.setDate(yesterday.getDate() - 1);
+        today.setUTCHours(0, 0, 0, 0); // Set time to the start of the day
+        console.log('Current date (start of the day):', today);
 
+        // Find the existing progress for the user for that date
+        const existingProgress = await Progress.findOne({ userId: user._id, taskId, dateCompleted: today });
 
+        // If progress exists, delete it
+        if (existingProgress) {
+            await Progress.deleteOne({ userId: user._id, taskId, dateCompleted: today });
+        }
+
+        const newProgress = new Progress({ userId: user._id, taskId, dateCompleted: today, difficulty });
+        await newProgress.save();
         // Handle streak logic
-        const lastCompletedDateString = user.lastCompletedDate.toDateString();
-        if (lastCompletedDateString === yesterday.toDateString()) {
+        const todayString = dateCompleted.toDateString();
+        const yesterday = new Date(dateCompleted);
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yesterdayString = yesterday.toDateString();
+        const lastCompletedDateString = user.lastCompletedDate ? user.lastCompletedDate.toDateString() : null;
+
+        if (lastCompletedDateString === yesterdayString) {
             user.streak += 1; 
         } else if (lastCompletedDateString === todayString) {
-            // do nothing
+            // Do nothing (same day)
         } else {
             user.streak = 1; 
         }
-        user.lastCompletedDate = today;
+
+        user.lastCompletedDate = dateCompleted; 
         await user.save();
+
         res.status(200).json({ message: 'Progress updated successfully', difficulty });
     } catch (error) {
+        console.error('Server error:', error);
         res.status(500).json({ error: 'Server error' });
     }
-}
+};
+
 
 // Handle delete progress
 exports.deleteProgress = async (req, res) => {

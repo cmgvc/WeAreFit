@@ -4,16 +4,26 @@ const path = require('path');
 
 exports.fetchDailyChallenge = async (req, res) => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
-    const challenge = await Challenge.findOne({ date: today });
-    if (challenge) {
-        res.json(challenge);
+    const startOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+    const endOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() + 1));
+
+    console.log('Start of Day (UTC):', startOfDay.toISOString());
+    console.log('End of Day (UTC):', endOfDay.toISOString());
+
+    const challenges = await Challenge.find({
+        date: { $gte: startOfDay, $lt: endOfDay }
+    });
+
+    console.log('Challenges found:', challenges);
+
+    if (challenges.length > 0) {
+        res.json(challenges);
     } else {
-        res.status(404).send('Challenge not found for today.');
+        res.status(404).send('No challenges found for today.');
     }
 };
 
-const getRandomWorkoutFromFile = async (file) => {
+exports.getRandomWorkoutFromFile = async (file) => {
     try {
         const data = await fs.readFile(file, 'utf8');
         const workouts = data.split('\n').map(line => line.trim()).filter(line => line);

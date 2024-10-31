@@ -25,9 +25,9 @@ const ChallengeContainer = () => {
             setLoading(true);
             try {
                 const data = await fetchRandomWorkout();
-                setBeginner(data.beginnerWorkout);
-                setIntermediate(data.intermediateWorkout);
-                setAdvanced(data.advancedWorkout);
+                setBeginner(data[0].beginnerWorkout);
+                setIntermediate(data[0].intermediateWorkout);
+                setAdvanced(data[0].advancedWorkout);
             } catch (error) {
                 console.error('Error fetching workout challenges:', error);
             } finally {
