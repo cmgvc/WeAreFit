@@ -38,10 +38,14 @@ const ChallengeContainer = () => {
     }, []);
 
     useEffect(() => {
-        const savedDifficulty = getProgressByDate(user, formattedDate);
-        if (savedDifficulty) {
-            setCompletedChallengeDifficulty(savedDifficulty);
+        const loadProgress = async () => {
+            const savedDifficulty = await getProgressByDate(user, formattedDate);
+            if (savedDifficulty) {
+                setCompletedChallengeDifficulty(savedDifficulty.difficulty);
+                console.log(savedDifficulty)
+            }
         }
+        loadProgress();
     }, []);
 
     const toggleBeginner = () => {

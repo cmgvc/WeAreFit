@@ -67,7 +67,7 @@ export const getProgressByDate = async (userId, date) => {
         });
         const data = await response.json();
         console.log(userId);
-        console.log(data);
+        console.log(data.difficulty);
         return data;
     } catch (error) {
         console.error('Error fetching the progress:', error);
