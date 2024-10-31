@@ -73,3 +73,28 @@ export const getProgressByDate = async (userId, date) => {
         console.error('Error fetching the progress:', error);
     }
 }
+
+export const getFriendsList = async (userId) => {
+    try {
+        const response = await fetch(`${getUrl()}/api/friends/${userId}`); 
+        const data =  await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching friends list:', error);
+    }
+};
+
+export const addFriendRequest = async (userId, friend) => {
+    try {
+        const response = await fetch(`${getUrl()}/api/friends/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId, friend })
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('Error adding friend:', error);
+    }
+}

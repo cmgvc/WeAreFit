@@ -31,17 +31,23 @@
     }
 }
 
+.user-info {
+    display: flex;
+}
+
 .progress-dates {
     h2 {
+        margin-left: 15rem;
         font-size: 4rem;
-        margin-left: 1rem;
         line-height: 5rem;
         font-weight: 500;
+        margin-top: 2rem;
     }
 }
 
 .react-calendar {
-    margin: 4rem auto; 
+    margin-left: 16rem;
+    margin-bottom: 5rem;
     margin-top: -1rem;
     border: none !important;
 }
@@ -85,4 +91,59 @@
 
 .react-calendar__navigation button:hover {
     color: #0056b3;
+}
+
+
+.friends-list {
+    margin-left: 12rem;
+    margin-top: -2rem;
+}
+
+.friends-list p {
+    font-size: 4rem;
+    line-height: 5rem;
+    font-weight: 500;
+}
+
+.friends-list input {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+}
+
+.friends-list button {
+    padding: 1rem 1.2rem;    
+    margin-top: 1rem;    
+    background-color: #000000;
+    justify-content: center;
+    color: #ffffff;               
+    border: none;                
+    border-radius: 50px;           
+    cursor: pointer;    
+    &:hover {
+        background-color: #282828;
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+}
+
+.leaderboard {
+    margin-top: -1rem;
+    border-top: 1px solid #f0f0f0;
+}
+
+.leaderboard p {
+    font-size: 4rem;
+    font-weight: 500;
+    margin-top: 2rem;
+}
+
+.leaderboard h3 {
+    margin-top: -3rem;  
+    margin-bottom: 3rem;
 }

@@ -5,7 +5,7 @@ const cors = require('cors');
 const app   = express();
 const https = require('https');
 const fs = require('fs');
-const PORT = 8080;
+const PORT = 3001;
 const cron = require('./utils/cronJob');
 const { generateDailyChallenge } = require('./controllers/challengeController');
 
