@@ -80,7 +80,7 @@ const ChallengeContainer = () => {
             const userId = user;
             const taskId = beginnerChallenge ? beginner : intermediateChallenge ? intermediate : advanced;
             const dateCompleted = formattedDate;
-            const result = await completeChallenge(userId, taskId, dateCompleted, difficulty);
+            const result = await completeChallenge(userId, taskId, difficulty);
 
             if (result.error) {
                 setErrorMessage(result.error);

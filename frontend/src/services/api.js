@@ -8,14 +8,14 @@ export const fetchRandomWorkout = async () => {
     }
 };
 
-export const completeChallenge = async (userId, taskId, dateCompleted, difficulty) => {
+export const completeChallenge = async (userId, taskId, difficulty) => {
     try {
         const response = await fetch(`${getUrl()}/api/progress/update`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ userId, taskId, dateCompleted, difficulty })
+            body: JSON.stringify({ userId, taskId, difficulty })
         });
         return await response.json();
     } catch (error) {

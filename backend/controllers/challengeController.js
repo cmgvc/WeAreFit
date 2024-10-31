@@ -7,14 +7,9 @@ exports.fetchDailyChallenge = async (req, res) => {
     const startOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
     const endOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() + 1));
 
-    console.log('Start of Day (UTC):', startOfDay.toISOString());
-    console.log('End of Day (UTC):', endOfDay.toISOString());
-
     const challenges = await Challenge.find({
         date: { $gte: startOfDay, $lt: endOfDay }
     });
-
-    console.log('Challenges found:', challenges);
 
     if (challenges.length > 0) {
         res.json(challenges);

@@ -73,7 +73,6 @@ exports.getProgressByDate = async (req, res) => {
             dateCompleted: { $gte: targetDate, $lt: endDate }
         });
 
-        console.log('Progress found:', progress);
 
         if (!progress) {
             console.log('Progress not found for this date');
@@ -90,53 +89,78 @@ exports.getProgressByDate = async (req, res) => {
 // Handle update progress difficulty
 exports.updateProgress = async (req, res) => {
     const { userId, taskId, difficulty } = req.body;
-
-    // Get the current date for dateCompleted if not provided
     const dateCompleted = new Date();
-    
-    // Validate input
+
     if (!userId || !taskId) {
+        console.log('Missing userId or taskId');
         return res.status(400).json({ error: 'User ID and Task ID are required.' });
     }
 
     try {
         const user = await findUser(userId);
+
         if (!user) {
+            console.log('User not found');
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Convert dateCompleted to Date object
-        const today = new Date(dateCompleted);
-        today.setUTCHours(0, 0, 0, 0); // Set time to the start of the day
-        console.log('Current date (start of the day):', today);
+        // Set start and end times for today
+        const todayStart = new Date(dateCompleted);
+        todayStart.setUTCHours(0, 0, 0, 0);
+        const todayEnd = new Date(todayStart);
+        todayEnd.setUTCHours(23, 59, 59, 999);
 
-        // Find the existing progress for the user for that date
-        const existingProgress = await Progress.findOne({ userId: user._id, taskId, dateCompleted: today });
+        // Find existing progress for the user for that date
+        const existingProgress = await Progress.findOne({
+            userId: user,
+            dateCompleted: { $gte: todayStart, $lt: todayEnd }
+        });
+        console.log('Existing progress:', existingProgress);
 
-        // If progress exists, delete it
         if (existingProgress) {
-            await Progress.deleteOne({ userId: user._id, taskId, dateCompleted: today });
+            // Attempt to delete the existing progress
+            const deleteResult = await Progress.deleteOne({
+                userId: user,
+                dateCompleted: { $gte: todayStart, $lt: todayEnd }
+            });
+
+            // Log the result of the deletion attempt
+            console.log('Delete result:', deleteResult);
+
+            // Check if a document was deleted
+            if (deleteResult.deletedCount === 0) {
+                console.log('No progress found to delete');
+            } else {
+                console.log('Progress deleted successfully');
+            }
+        } else {
+            console.log('No progress found to delete');
         }
 
-        const newProgress = new Progress({ userId: user._id, taskId, dateCompleted: today, difficulty });
+        // Save new progress with updated difficulty
+        const newProgress = new Progress({ userId: user._id, taskId, dateCompleted: todayStart, difficulty });
         await newProgress.save();
+        console.log('New progress saved:', newProgress);
+
         // Handle streak logic
-        const todayString = dateCompleted.toDateString();
-        const yesterday = new Date(dateCompleted);
+        const yesterday = new Date(todayStart);
         yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayString = yesterday.toDateString();
         const lastCompletedDateString = user.lastCompletedDate ? user.lastCompletedDate.toDateString() : null;
 
         if (lastCompletedDateString === yesterdayString) {
-            user.streak += 1; 
-        } else if (lastCompletedDateString === todayString) {
-            // Do nothing (same day)
+            user.streak += 1;
+            console.log('Streak incremented:', user.streak);
+        } else if (lastCompletedDateString === todayStart.toDateString()) {
+            console.log('Progress already completed for today');
         } else {
-            user.streak = 1; 
+            user.streak = 1;
+            console.log('Streak reset to 1');
         }
 
-        user.lastCompletedDate = dateCompleted; 
+        user.lastCompletedDate = todayStart;
         await user.save();
+        console.log('User streak and last completed date updated:', user.streak, user.lastCompletedDate);
 
         res.status(200).json({ message: 'Progress updated successfully', difficulty });
     } catch (error) {
