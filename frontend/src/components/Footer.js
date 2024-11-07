@@ -31,7 +31,7 @@ function Footer() {
                 </div>
                 <div className="footer-about">
                     <h4>ABOUT</h4>
-                    <a href="https://chloe-gvc.vercel.app/">About us</a>
+                    <a href="https://chloegav.vercel.app/">About us</a>
                 </div>
             </div>
             <div className="socials">
