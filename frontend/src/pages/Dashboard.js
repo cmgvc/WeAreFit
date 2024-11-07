@@ -14,24 +14,38 @@ function Dashboard() {
     const [errorMessage, setErrorMessage] = useState('');
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [friendInput, setFriendInput] = useState('');
-    const [friendsList, setFriendsList] = useState([]); // Use state for friendsList
+    const [friendsList, setFriendsList] = useState([]);
+    const [friendStreaks, setFriendStreaks] = useState({}); 
 
     const requestFriend = async () => {
         try {
             const friend = document.querySelector('.add-friend input').value;
-            const response = await addFriendRequest(user, friend); 
+            const response = await addFriendRequest(user, friend);
             setFriendInput('');
             if (response.status === 400) {
                 setErrorMessage(response.message);
                 setIsPopupOpen(true);
                 return;
             }  
-            // Update the friendsList state with the new friend
-            setFriendsList(prevList => [...prevList, { username: friend }]);
+            setFriendsList(prevList => [...prevList, friend]);
         } catch (error) {
             console.error('Error adding friend:', error);
         }
     }
+
+    const fetchFriendStreaks = async (friends) => {
+        const streaks = {};
+        for (let friend of friends) {
+            try {
+                const streakValue = await getStreak(friend);
+                streaks[friend] = streakValue;
+                streaks[user] = streak;
+            } catch (error) {
+                console.error('Error fetching streak for friend:', friend, error);
+            }
+        }
+        setFriendStreaks(streaks); 
+    };
 
     useEffect(() => { 
         const token = localStorage.getItem('authToken') !== null;
@@ -56,14 +70,30 @@ function Dashboard() {
         const getFriends = async () => {
             try {
                 const friends = await getFriendsList(user);
-                setFriendsList(friends); // Update state here
+                setFriendsList(friends); 
                 console.log(friends.length);
+                fetchFriendStreaks(friends); 
             } catch (error) {
                 console.error('Error fetching friends list:', error);
             }  
-        }
+        };
         getFriends();
     }, [auth, user]);
+
+    useEffect(() => {
+        if (Object.keys(friendStreaks).length > 0) {
+            const updatedFriendsList = [...friendsList];
+            if (!updatedFriendsList.includes(user)) {
+                updatedFriendsList.push(user);
+            }
+            const sortedFriends = updatedFriendsList.sort((a, b) => {
+                const streakA = friendStreaks[a] || 0;
+                const streakB = friendStreaks[b] || 0;
+                return streakB - streakA; 
+            });
+            setFriendsList(sortedFriends);  
+        }
+    }, [friendStreaks]);  
 
     return (
         <div>
@@ -88,11 +118,11 @@ function Dashboard() {
                         />
                     </div> 
                     <div className='friends-list'>
-                        <p>FRIENDS</p>
+                        <h1>FRIENDS</h1>
                         <div className='friends-boxes'>
-                            {friendsList.length > 0 ? (friendsList.map(friend => (
+                            {friendsList.length > 0 ? (friendsList.filter(friend => friend !== user).map(friend => (
                                 <div className='friends-box' key={friend}>
-                                    {friend}
+                                    <p>{friend}</p>
                                 </div>
                             ))) : <h3>No friends yet</h3>}
                         </div>
@@ -113,12 +143,12 @@ function Dashboard() {
                     </div>
                 </div>
                 <div className='leaderboard'>
-                    <p>LEADERBOARD</p>
+                    <h1>LEADERBOARD</h1>
                     <div className='leader-boxes'>
-                        {friendsList.length > 0 ? (friendsList.map(friend => (
-                            <div className='leader-box' key={friend.username}>
-                                <p>{friend.username}</p>
-                                <p>{friend.streak} day streak</p>
+                        {friendsList.length > 0 ? (friendsList.map((friend, index) => (
+                            <div className='leader-box' key={friend}>
+                                <p>{index + 1}.&nbsp; {friend}</p>&nbsp;
+                                <p>{friendStreaks[friend] || 'Loading...'} day streak</p>
                             </div>
                         ))) : <h3>No friends yet</h3>}
                     </div>

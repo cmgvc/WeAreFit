@@ -74,8 +74,13 @@ export const getProgressByDate = async (userId, date) => {
 
 export const getFriendsList = async (userId) => {
     try {
-        const response = await fetch(`${getUrl()}/api/friends/${userId}`); 
-        const data =  await response.json();
+        const response = await fetch(`${getUrl()}/api/friends/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }); 
+        const data =  await response.json();    
         console.log(data)
         return data;
     } catch (error) {
