@@ -22,14 +22,22 @@ function Navbar() {
         setOpenLinks(!openLinks);
     }
 
+    const handleAccountClick = () => {
+        if (isAuthenticated()) {
+            navigate('/dashboard');
+        } else {
+            navigate('/auth');
+        }
+    }
+
     return (
         <div className='navbar'>
             <div className='logo'>
                 <a href='/'><img src={Logo} alt='Home'></img></a>
             </div>
             <div className='nav'>
-                <Link to="/dashboard">DASHBOARD</Link>
-                <Link to="/past">PAST CHALLENGES</Link>
+                <a onClick={handleAccountClick}>DASHBOARD</a>
+                <a to="/past">PAST CHALLENGES</a>
             </div>
             <div className='icon'>
                 <button onClick={toggleNavbar}>
