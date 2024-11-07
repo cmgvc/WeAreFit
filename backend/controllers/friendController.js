@@ -41,9 +41,7 @@ exports.getFriends = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        console.log(user.friends);
-        const friendsUsernames = user.friends.map(friend => friend.username);
-        res.status(200).json(friendsUsernames);
+        res.status(200).json(user.friends);
     } catch (error) {
         console.error('Error fetching friends:', error);
         res.status(500).json({ error: 'Server error' });
