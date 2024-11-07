@@ -3,6 +3,7 @@ import { getUsername } from '../services/auth';
 import '../styles/Dashboard.css';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import Popup from 'reactjs-popup';
 import { getStreak, getFriendsList, addFriendRequest } from '../services/api';
 import ChallengeContainer from '../components/ChallengeContainer.js';
 
@@ -10,14 +11,23 @@ function Dashboard() {
     const [auth, setAuth] = useState(true);
     const user = getUsername();
     const [streak, setStreak] = useState(0);
-    let friendsList = getFriendsList(user);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [friendInput, setFriendInput] = useState('');
+    const [friendsList, setFriendsList] = useState([]); // Use state for friendsList
 
     const requestFriend = async () => {
         try {
             const friend = document.querySelector('.add-friend input').value;
-            const response = addFriendRequest(user, friend);
-            document.querySelector('.add-friend input').setAttribute('value', '');
-            friendsList.push(friend);
+            const response = await addFriendRequest(user, friend); 
+            setFriendInput('');
+            if (response.status === 400) {
+                setErrorMessage(response.message);
+                setIsPopupOpen(true);
+                return;
+            }  
+            // Update the friendsList state with the new friend
+            setFriendsList(prevList => [...prevList, { username: friend }]);
         } catch (error) {
             console.error('Error adding friend:', error);
         }
@@ -43,9 +53,17 @@ function Dashboard() {
     }, [auth, user]);
 
     useEffect(() => {   
-        
+        const getFriends = async () => {
+            try {
+                const friends = await getFriendsList(user);
+                setFriendsList(friends); // Update state here
+                console.log(friends.length);
+            } catch (error) {
+                console.error('Error fetching friends list:', error);
+            }  
+        }
+        getFriends();
     }, [auth, user]);
-
 
     return (
         <div>
@@ -55,7 +73,7 @@ function Dashboard() {
                     <h3>Please sign in</h3>
                     <button onClick={() => window.location.href = '/auth'}>SIGN IN</button>
                 </div>}
-                <ChallengeContainer />
+            <ChallengeContainer />
             { auth ? 
             <div>
                 <div className='user-info'>
@@ -73,15 +91,25 @@ function Dashboard() {
                         <p>FRIENDS</p>
                         <div className='friends-boxes'>
                             {friendsList.length > 0 ? (friendsList.map(friend => (
-                                <div className='friends-box' key={friend.username}>
-                                    <p>{friend.username}</p>
+                                <div className='friends-box' key={friend}>
+                                    {friend}
                                 </div>
                             ))) : <h3>No friends yet</h3>}
                         </div>
                         <div className='add-friend'>
-                            <input type='text' placeholder='Enter username'/>
+                            <input 
+                                type='text' 
+                                placeholder='Enter username' 
+                                value={friendInput} 
+                                onChange={e => setFriendInput(e.target.value)}
+                            />
                             <button onClick={requestFriend}>ADD</button>
                         </div>
+                        <Popup className="popup" open={isPopupOpen} onClose={() => setIsPopupOpen(false)} position="right center" closeOnDocumentClick={false}>
+                            <div className="error-message">{errorMessage}</div>
+                            <button className="popup-button" onClick={() => 
+                                setIsPopupOpen(false)}>Close</button>
+                        </Popup>
                     </div>
                 </div>
                 <div className='leaderboard'>

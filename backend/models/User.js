@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     streak: { type: Number, default: 0 },
     lastCompletedDate: { type: Date },
-    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+    friends: [{ type: String }]
 });
 
 const User = mongoose.model('User', userSchema);

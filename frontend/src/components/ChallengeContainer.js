@@ -42,7 +42,6 @@ const ChallengeContainer = () => {
             const savedDifficulty = await getProgressByDate(user, formattedDate);
             if (savedDifficulty) {
                 setCompletedChallengeDifficulty(savedDifficulty.difficulty);
-                console.log(savedDifficulty)
             }
         }
         loadProgress();

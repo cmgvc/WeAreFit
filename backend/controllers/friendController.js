@@ -8,24 +8,28 @@ exports.addFriend = async (req, res) => {
     try {
         const user = await findUser(userId);
         if (!user) {
-            return res.status(404).json({error: 'User not found'});
+            console.log('User not found');
+            return res.status(404).json({ error: 'User not found' });
         }
 
         const friend = await findUser(friendId);
         if (!friend) {
-            return res.status(404).json({error: 'Account not found'});
+            console.log('Account not found');
+            return res.status(404).json({ error: 'Account not found' });
         }
 
-        if (user.friends.includes(friend._id)) {
+        if (user.friends.includes(friendId)) {
+            console.log('Already friends');
             return res.status(400).json({ message: 'Already friends' });
         }
-        user.friends.push(friend);
+
+        user.friends.push(friendId);
         await user.save();
         res.status(201).json({ message: 'Friend added successfully' });
     } catch (error) {
+        console.error('Error adding friend:', error);
         res.status(500).json({ error: 'Server error' });
     }
-
 }
 
 // Get all friends
@@ -35,10 +39,13 @@ exports.getFriends = async (req, res) => {
     try {
         const user = await findUser(userId);
         if (!user) {
-            return res.status(404).json({error: 'User not found'});
+            return res.status(404).json({ error: 'User not found' });
         }
-        res.status(200).json(user.friends);
+        console.log(user.friends);
+        const friendsUsernames = user.friends.map(friend => friend.username);
+        res.status(200).json(friendsUsernames);
     } catch (error) {
+        console.error('Error fetching friends:', error);
         res.status(500).json({ error: 'Server error' });
     }
 }
@@ -50,20 +57,10 @@ exports.deleteFriend = async (req, res) => {
     try {
         const user = await findUser(userId);
         if (!user) {
-            return res.status(404).json({error: 'User not found'});
-        }     
-
-        const friend = await findUser(friendId);
-        if (!friend) {
-            return res.status(404).json({error: 'Account not found'});
-        }  
-
-        if (!user.friends.includes(friend._id)) {
-            return res.status(404).json({ message: 'Friend not found' });
+            return res.status(404).json({ error: 'User not found' });
         }
 
-        // Check if the friend exists in the user's friends list
-        const friendIndex = user.friends.indexOf(friend._id);
+        const friendIndex = user.friends.indexOf(friendId);
         if (friendIndex === -1) {
             return res.status(404).json({ message: 'Friend not found' });
         }
@@ -72,6 +69,7 @@ exports.deleteFriend = async (req, res) => {
         await user.save();
         res.status(200).json({ message: 'Friend removed successfully' });
     } catch (error) {
+        console.error('Error removing friend:', error);
         res.status(500).json({ error: 'Server error' });
     }
 }

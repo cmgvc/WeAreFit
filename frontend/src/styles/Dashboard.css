@@ -95,7 +95,7 @@
 
 
 .friends-list {
-    margin-left: 12rem;
+    margin-left: 8rem;
     margin-top: -2rem;
 }
 
@@ -114,7 +114,7 @@
 }
 
 .friends-list button {
-    padding: 1rem 1.2rem;    
+    padding: 0.7rem 1.1rem;    
     margin-top: 1rem;    
     background-color: #000000;
     justify-content: center;
