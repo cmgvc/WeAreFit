@@ -1,6 +1,7 @@
 # WeAreFit
 
 WeAreFit is a web-based fitness app designed to encourage users to engage in daily fitness challenges and share their progress with friends. The app combines fitness tracking, social interaction, and gamification to create an engaging experience for fitness enthusiasts.
+https://we-are-fit.vercel.app/
 
 ## Features
 
