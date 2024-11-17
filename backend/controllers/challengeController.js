@@ -1,8 +1,11 @@
 const Challenge = require('../models/Challenge');
 const fs = require('fs').promises;
 const path = require('path');
+const dotenv = require('dotenv');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+dotenv.config();
 
-exports.fetchDailyChallenge = async (req, res) => {
+const fetchDailyChallenge = async (req, res) => {
     const today = new Date();
     const startOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
     const endOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() + 1));
@@ -10,9 +13,6 @@ exports.fetchDailyChallenge = async (req, res) => {
     const challenges = await Challenge.find({
         date: { $gte: startOfDay, $lt: endOfDay }
     });
-    console.log(challenges);
-    console.log(startOfDay);
-    console.log(endOfDay);
 
     if (challenges.length > 0) {
         res.json(challenges);
@@ -21,7 +21,7 @@ exports.fetchDailyChallenge = async (req, res) => {
     }
 };
 
-exports.getRandomWorkoutFromFile = async (file) => {
+const getRandomWorkoutFromFile = async (file) => {
     try {
         const data = await fs.readFile(file, 'utf8');
         const workouts = data.split('\n').map(line => line.trim()).filter(line => line);
@@ -33,28 +33,38 @@ exports.getRandomWorkoutFromFile = async (file) => {
     }
 };
 
-exports.generateDailyChallenge = async () => {
+const generateDailyChallenge = async () => {
     const today = new Date();
-    today.setUTCHours(0, 0, 0, 0); 
-    const beginnerFile = path.join(__dirname, '..', 'assets', 'beginner.txt');
-    const intermediateFile = path.join(__dirname, '..', 'assets', 'intermediate.txt');
-    const advancedFile = path.join(__dirname, '..', 'assets', 'advanced.txt');
-
-    const randomBeginner = await exports.getRandomWorkoutFromFile(beginnerFile);
-    const randomIntermediate = await exports.getRandomWorkoutFromFile(intermediateFile);
-    const randomAdvanced = await exports.getRandomWorkoutFromFile(advancedFile);
-
-    const workoutEntry = new Challenge({
-        date: today,
-        beginnerWorkout: randomBeginner,
-        intermediateWorkout: randomIntermediate,
-        advancedWorkout: randomAdvanced
-    });
+    today.setUTCHours(0, 0, 0, 0);
 
     try {
+        const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        const beginnerPrompt = "Generate a one-sentence workout for beginners.";
+        const intermediatePrompt = "Generate a one-sentence workout for intermediate users.";
+        const advancedPrompt = "Generate a one-sentence workout for advanced users.";
+
+        const beginnerResult = await model.generateContent(beginnerPrompt);
+        const intermediateResult = await model.generateContent(intermediatePrompt);
+        const advancedResult = await model.generateContent(advancedPrompt);
+
+        const workoutEntry = new Challenge({
+            date: today,
+            beginnerWorkout: beginnerResult.response.text(),
+            intermediateWorkout: intermediateResult.response.text(),
+            advancedWorkout: advancedResult.response.text()
+        });
+
         await workoutEntry.save(); 
         console.log('Daily challenge generated successfully.', workoutEntry);
     } catch (error) {
         console.error('Error saving the workout entry:', error);
     }
+};
+
+module.exports = {
+    fetchDailyChallenge,
+    getRandomWorkoutFromFile,
+    generateDailyChallenge
 };

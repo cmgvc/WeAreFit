@@ -31,5 +31,5 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, async () => {
     console.log('Server is running on port ' + PORT);
-    // await generateDailyChallenge(); // this is for testing purposes
+    // await generateDailyChallenge(); // for testing purposes
 })
