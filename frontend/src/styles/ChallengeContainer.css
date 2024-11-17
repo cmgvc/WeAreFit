@@ -47,99 +47,15 @@
     cursor: pointer;
 }
 
-.beginnerChallenge#open {
-    text-align: center;
-    padding-top: 2.5rem;
-    color: black;
-    .leftText {
-        line-height: 0.5rem;
-    }
-    p {
-        color: #afafaf;
-        font-weight: bold;
-    }
-}
-
-.beginnerChallenge#close {
-    display: none;
-}
-
-.beginnerChallenge#active {
-    color: black;
-    border-bottom: 1px solid #333;
-}
-
-.beginnerChallenge#inactive {
-    color: grey;
-}
-
-.beginnerChallenge button {
-    font-size: 13px;
-    margin: 1rem;
-    padding: 0.6rem 1rem;  
-    background-color: #000000;    
-    color: #ffffff;               
-    border: none;                
-    border-radius: 150px;           
-    cursor: pointer;  
-    
-    &:hover {
-        background-color: #282828;
-    }
-    a {
-        color: #ffffff;
-        text-decoration: none;
-    }
-}
-
-.intermediateChallenge#open {
-    text-align: center;
-    padding-top: 2.5rem;
-    .leftText {
-        line-height: 0.5rem;
-    }
-    p {
-        color: #afafaf;
-        font-weight: bold;
-    }
-}
-
-.intermediateChallenge#close {
-    display: none;
-}
-
-.intermediateChallenge#active {
-    color: black;
-    border-bottom: 1px solid #333;
-}
-
-.intermediateChallenge#inactive {
-    color: grey;
-}
-.intermediateChallenge button {
-    font-size: 13px;
-    padding: 0.6rem 1rem; 
-    margin: 1rem; 
-    background-color: #000000;    
-    color: #ffffff;               
-    border: none;                
-    border-radius: 150px;           
-    cursor: pointer;  
-    
-    &:hover {
-        background-color: #282828;
-    }
-    a {
-        color: #ffffff;
-        text-decoration: none;
-    }
-}
-
+.beginnerChallenge#open,
+.intermediateChallenge#open,
 .advancedChallenge#open {
     text-align: center;
     padding-top: 2.5rem;
+    color: black;
     .leftText {
-        line-height: 0.5rem;
+        line-height: 1.5rem;
+        padding: 0 7rem;
     }
     p {
         color: #afafaf;
@@ -147,19 +63,31 @@
     }
 }
 
+.beginnerChallenge#close,
+.intermediateChallenge#close,
 .advancedChallenge#close {
     display: none;
 }
 
+.beginnerChallenge#active,
+.intermediateChallenge#active,
 .advancedChallenge#active {
     color: black;
     border-bottom: 1px solid #333;
 }
 
+.beginnerChallenge#inactive,
+.intermediateChallenge#inactive,
+.advancedChallenge#inactive {
+    color: grey;
+}
+
+.beginnerChallenge button,
+.intermediateChallenge button,
 .advancedChallenge button {
     font-size: 13px;
-    padding: 0.6rem 1rem;  
     margin: 1rem;
+    padding: 0.6rem 1rem;  
     background-color: #000000;    
     color: #ffffff;               
     border: none;                
@@ -173,11 +101,6 @@
         color: #ffffff;
         text-decoration: none;
     }
-}
-
-.advancedChallenge#inactive {
-    color: grey;
-    
 }
 
 .complete {

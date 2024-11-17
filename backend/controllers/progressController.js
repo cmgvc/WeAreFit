@@ -11,23 +11,20 @@ exports.completeTask = async (req, res) => {
             return res.status(404).json({error: 'User not found'});
         }
 
-        // Find if task is already completed for the day
         const task = await Progress.findOne({userId: user._id, taskId, dateCompleted});
         if (task) {
             return res.status(400).json({error: 'Task already completed'});
         }
 
-        // Save the progress
         const progress = new Progress({userId: user._id, taskId, dateCompleted, difficulty});
         await progress.save();
 
-        // Convert dateCompleted to Date object
         const today = new Date(dateCompleted);
         const yesterday = new Date(today);
         yesterday.setDate(yesterday.getDate() - 1);
 
 
-        // Handle streak logic
+        // handle streak logic
         const lastCompletedDateString = user.lastCompletedDate.toDateString();
         if (lastCompletedDateString === yesterday.toDateString()) {
             user.streak += 1; 
@@ -48,7 +45,6 @@ exports.completeTask = async (req, res) => {
 exports.getProgressByDate = async (req, res) => {
     const { userId, dateCompleted } = req.body;
 
-    // Check if dateCompleted is valid
     if (dateCompleted && isNaN(Date.parse(dateCompleted))) {
         return res.status(400).json({ error: 'Invalid date format' });
     }
@@ -67,7 +63,6 @@ exports.getProgressByDate = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Find progress for the user on that date
         const progress = await Progress.findOne({
             userId: user._id,
             dateCompleted: { $gte: targetDate, $lt: endDate }
@@ -104,13 +99,11 @@ exports.updateProgress = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Set start and end times for today
         const todayStart = new Date(dateCompleted);
         todayStart.setUTCHours(0, 0, 0, 0);
         const todayEnd = new Date(todayStart);
         todayEnd.setUTCHours(23, 59, 59, 999);
 
-        // Find existing progress for the user for that date
         const existingProgress = await Progress.findOne({
             userId: user,
             dateCompleted: { $gte: todayStart, $lt: todayEnd }
@@ -118,16 +111,14 @@ exports.updateProgress = async (req, res) => {
         console.log('Existing progress:', existingProgress);
 
         if (existingProgress) {
-            // Attempt to delete the existing progress
+            // attempt to delete the existing progress
             const deleteResult = await Progress.deleteOne({
                 userId: user,
                 dateCompleted: { $gte: todayStart, $lt: todayEnd }
             });
-
-            // Log the result of the deletion attempt
             console.log('Delete result:', deleteResult);
 
-            // Check if a document was deleted
+            // check if a document was deleted
             if (deleteResult.deletedCount === 0) {
                 console.log('No progress found to delete');
             } else {
@@ -137,12 +128,12 @@ exports.updateProgress = async (req, res) => {
             console.log('No progress found to delete');
         }
 
-        // Save new progress with updated difficulty
+        // save new progress with updated difficulty
         const newProgress = new Progress({ userId: user._id, taskId, dateCompleted: todayStart, difficulty });
         await newProgress.save();
         console.log('New progress saved:', newProgress);
 
-        // Handle streak logic
+        // handle streak logic
         const yesterday = new Date(todayStart);
         yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayString = yesterday.toDateString();
@@ -175,7 +166,6 @@ exports.deleteProgress = async (req, res) => {
     const userId = req.params.id;
     const { dateCompleted } = req.body;
     try {
-        // Find user
         const user = await getUser(userId);
         if (!user) {
             return res.status(404).json({error: 'User not found'});
@@ -192,15 +182,37 @@ exports.deleteProgress = async (req, res) => {
     }
 }   
 
-exports.getStreak = async (req, res) => {   
+exports.getStreak = async (req, res) => {
     const { userId } = req.body;
+
     try {
         const user = await findUser(userId);
+
         if (!user) {
-            return res.status(404).json({error: 'User not found'});
+            return res.status(404).json({ error: 'User not found' });
         }
-        res.status(200).json({ streak: user.streak });
+
+        const today = new Date();
+        today.setUTCHours(0, 0, 0, 0); 
+        const yesterday = new Date(today);
+        yesterday.setUTCDate(today.getUTCDate() - 1); 
+        const todayString = today.toUTCString(); 
+        const yesterdayString = yesterday.toUTCString();
+
+        const lastCompletedDateString = user.lastCompletedDate ? new Date(user.lastCompletedDate).toUTCString() : null;
+
+        let streak = 0; 
+
+        if (lastCompletedDateString === todayString) {
+            console.log('Last completed date is today');
+            streak = user.streak; 
+        } else if (lastCompletedDateString === yesterdayString) {
+            streak = user.streak; 
+        }
+
+        res.status(200).json({ streak });
+
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }
-}
+};

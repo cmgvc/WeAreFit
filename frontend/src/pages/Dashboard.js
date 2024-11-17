@@ -40,6 +40,7 @@ function Dashboard() {
                 const streakValue = await getStreak(friend);
                 streaks[friend] = streakValue;
                 streaks[user] = streak;
+                // console.log('Streaks:', streaks);
             } catch (error) {
                 console.error('Error fetching streak for friend:', friend, error);
             }
@@ -71,7 +72,6 @@ function Dashboard() {
             try {
                 const friends = await getFriendsList(user);
                 setFriendsList(friends); 
-                console.log(friends.length);
                 fetchFriendStreaks(friends); 
             } catch (error) {
                 console.error('Error fetching friends list:', error);
@@ -81,19 +81,29 @@ function Dashboard() {
     }, [auth, user]);
 
     useEffect(() => {
-        if (Object.keys(friendStreaks).length > 0) {
-            const updatedFriendsList = [...friendsList];
-            if (!updatedFriendsList.includes(user)) {
-                updatedFriendsList.push(user);
-            }
-            const sortedFriends = updatedFriendsList.sort((a, b) => {
-                const streakA = friendStreaks[a] || 0;
-                const streakB = friendStreaks[b] || 0;
-                return streakB - streakA; 
-            });
-            setFriendsList(sortedFriends);  
+    if (Object.keys(friendStreaks).length > 0) {
+        const updatedFriendsList = friendsList.filter(friend => friend !== user);
+        const sortedFriends = updatedFriendsList.sort((a, b) => {
+            const streakA = friendStreaks[a] || 0;
+            const streakB = friendStreaks[b] || 0;
+            return streakB - streakA; 
+        });
+        const userStreak = friendStreaks[user] || streak;  
+        const finalSortedList = [...sortedFriends];
+
+        const insertIndex = sortedFriends.findIndex(friend => friendStreaks[friend] < userStreak);
+        if (insertIndex !== -1) {
+            finalSortedList.splice(insertIndex, 0, user);
+        } else {
+            finalSortedList.push(user); 
         }
-    }, [friendStreaks]);  
+
+        setFriendsList(finalSortedList);  
+    }
+}, [friendStreaks, user, streak]); 
+
+
+    
 
     return (
         <div>
@@ -145,12 +155,16 @@ function Dashboard() {
                 <div className='leaderboard'>
                     <h1>LEADERBOARD</h1>
                     <div className='leader-boxes'>
-                        {friendsList.length > 0 ? (friendsList.map((friend, index) => (
-                            <div className='leader-box' key={friend}>
-                                <p>{index + 1}.&nbsp; {friend}</p>&nbsp;
-                                <p>{friendStreaks[friend] || 'Loading...'} day streak</p>
-                            </div>
-                        ))) : <h3>No friends yet</h3>}
+                        {friendsList.length > 0 ? (
+                            friendsList.map((friend, index) => (
+                                <div className='leader-box' key={friend}>
+                                    <p>{index + 1}.&nbsp; {friend}</p>&nbsp;
+                                    <p>{friendStreaks[friend]} day streak</p>
+                                </div>
+                            ))
+                        ) : (
+                            <h3>No friends yet</h3>
+                        )}
                     </div>
                 </div>
             </div>: null }

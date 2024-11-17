@@ -81,7 +81,6 @@ export const getFriendsList = async (userId) => {
             }
         }); 
         const data =  await response.json();    
-        console.log(data)
         return data;
     } catch (error) {
         console.error('Error fetching friends list:', error);
