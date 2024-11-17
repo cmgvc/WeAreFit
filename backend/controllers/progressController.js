@@ -202,9 +202,7 @@ exports.getStreak = async (req, res) => {
         const lastCompletedDateString = user.lastCompletedDate ? new Date(user.lastCompletedDate).toUTCString() : null;
 
         let streak = 0; 
-
         if (lastCompletedDateString === todayString) {
-            console.log('Last completed date is today');
             streak = user.streak; 
         } else if (lastCompletedDateString === yesterdayString) {
             streak = user.streak; 
