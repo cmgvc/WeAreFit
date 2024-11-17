@@ -29,6 +29,9 @@ const ChallengeContainer = () => {
                 setIntermediate(data[0].intermediateWorkout);
                 setAdvanced(data[0].advancedWorkout);
             } catch (error) {
+                setBeginner('No challenge available today');
+                setIntermediate('No challenge available today');
+                setAdvanced('No challenge available today');
                 console.error('Error fetching workout challenges:', error);
             } finally {
                 setLoading(false);
