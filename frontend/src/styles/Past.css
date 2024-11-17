@@ -1,0 +1,36 @@
+.challenge-box {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10rem;
+    margin-left: 10rem;
+    margin-bottom: 3rem;
+    padding-right: 7rem;
+    padding-left: 7rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.challenge-box:hover {
+    transform: translateY(-2px);
+}
+
+.challenge-box p {
+    width: 80%;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+    color: #333333;
+}
+
+.challenge-box:nth-child(odd) {
+    background-color: #eeeeee;
+}
+
+.challenge-box:not(:last-child) {
+    margin-bottom: 0.8rem;
+}

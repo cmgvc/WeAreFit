@@ -21,6 +21,22 @@ const fetchDailyChallenge = async (req, res) => {
     }
 };
 
+const fetchPastChallenges = async (req, res) => {
+    try {
+        const challenges = await Challenge.find();
+
+        if (challenges.length > 0) {
+            res.json(challenges); 
+        } else {
+            res.status(404).send('No challenges found.');
+        }
+    } catch (error) {
+        console.error('Error fetching challenges:', error);
+        res.status(500).send('Server error');
+    }
+}
+
+
 const getRandomWorkoutFromFile = async (file) => {
     try {
         const data = await fs.readFile(file, 'utf8');
@@ -65,6 +81,7 @@ const generateDailyChallenge = async () => {
 
 module.exports = {
     fetchDailyChallenge,
+    fetchPastChallenges,
     getRandomWorkoutFromFile,
     generateDailyChallenge
 };

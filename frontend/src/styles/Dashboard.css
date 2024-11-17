@@ -162,8 +162,6 @@
 }
 
 .leaderboard {
-    margin-top: 2rem;
-    margin-bottom: 3rem;
     background-color: #f4f4f4;
     padding: 1.5rem;
     border-radius: 8px;
@@ -191,7 +189,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
+    margin-right: 10rem;
+    margin-left: 10rem;
     padding: 0.8rem;
     background-color: #ffffff;
     border-radius: 6px;
@@ -220,7 +220,7 @@
     color: #007bff; 
 }
 
-.leader-box:first-child {
+.leader-box:nth-child(odd) {
     background-color: #eeeeee;
 }
 

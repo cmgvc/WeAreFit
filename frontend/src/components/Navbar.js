@@ -37,7 +37,7 @@ function Navbar() {
             </div>
             <div className='nav'>
                 <a onClick={handleAccountClick}>DASHBOARD</a>
-                <a to="/past">PAST CHALLENGES</a>
+                <a href="/past">PAST CHALLENGES</a>
             </div>
             <div className='icon'>
                 <button onClick={toggleNavbar}>

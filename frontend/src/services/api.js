@@ -104,3 +104,12 @@ export const addFriendRequest = async (userId, friendId) => {
         console.error('Error adding friend:', error);
     }
 }
+
+export const getPastChallenges = async () => {
+    try {
+        const response = await fetch(`${getUrl()}/api/challenge/history`);
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching past challenges:', error);
+    }
+}

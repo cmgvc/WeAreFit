@@ -116,8 +116,6 @@ function Dashboard() {
                     <div className="progress-dates"> 
                         <h2>{streak} DAY STREAK</h2>
                         <Calendar
-                            // onChange={handleDateChange}
-                            // value={date}
                             tileContent={({ date, view }) => {
                             
                             }}
@@ -156,9 +154,6 @@ function Dashboard() {
                                 <div className='leader-box' key={friend}>
                                     <p>{index + 1}.&nbsp; {friend}</p>&nbsp;
                                     <p>{friendStreaks[friend]} day streak</p>
-                                    {/* <script>
-                                    console.log('Friend streaks:', friendStreaks);
-                                </script> */}
                                 </div>
                                 
                             ))
