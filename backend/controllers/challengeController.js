@@ -10,6 +10,9 @@ exports.fetchDailyChallenge = async (req, res) => {
     const challenges = await Challenge.find({
         date: { $gte: startOfDay, $lt: endOfDay }
     });
+    console.log(challenges);
+    console.log(startOfDay);
+    console.log(endOfDay);
 
     if (challenges.length > 0) {
         res.json(challenges);
@@ -32,14 +35,14 @@ exports.getRandomWorkoutFromFile = async (file) => {
 
 exports.generateDailyChallenge = async () => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    today.setUTCHours(0, 0, 0, 0); 
     const beginnerFile = path.join(__dirname, '..', 'assets', 'beginner.txt');
     const intermediateFile = path.join(__dirname, '..', 'assets', 'intermediate.txt');
     const advancedFile = path.join(__dirname, '..', 'assets', 'advanced.txt');
 
-    const randomBeginner = await getRandomWorkoutFromFile(beginnerFile);
-    const randomIntermediate = await getRandomWorkoutFromFile(intermediateFile);
-    const randomAdvanced = await getRandomWorkoutFromFile(advancedFile);
+    const randomBeginner = await exports.getRandomWorkoutFromFile(beginnerFile);
+    const randomIntermediate = await exports.getRandomWorkoutFromFile(intermediateFile);
+    const randomAdvanced = await exports.getRandomWorkoutFromFile(advancedFile);
 
     const workoutEntry = new Challenge({
         date: today,
