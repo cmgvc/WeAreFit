@@ -1,6 +1,6 @@
 # WeAreFit
 
-WeAreFit is a web-based fitness app that encourages users to engage in daily fitness challenges and share their progress with friends. An engaging experience for fitness enthusiasts is created by the app, which combines fitness tracking, social interaction, and gamification. The app uses the Gemini Google AI API to intelligently generate personalized fitness challenges, ensuring users receive workouts tailored to their preferences and goals. Visit the website [WeAreFit](https://we-are-fit.vercel.app/) to explore a variety of fitness resources and different workout plans.
+WeAreFit is a web-based fitness app that encourages users to engage in daily fitness challenges and share their progress with friends. An engaging experience for fitness enthusiasts is created by the app, which combines fitness tracking, social interaction, and gamification. The app uses the Gemini AI to intelligently generate personalized fitness challenges, ensuring users receive workouts tailored to their preferences and goals. Visit the website [WeAreFit](https://we-are-fit.vercel.app/) to explore a variety of fitness resources and different workout plans.
 
 ## Features
 
