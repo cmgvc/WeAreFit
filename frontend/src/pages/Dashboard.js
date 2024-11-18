@@ -22,7 +22,7 @@ function Dashboard() {
             const friend = document.querySelector('.add-friend input').value;
             const response = await addFriendRequest(user, friend);
             setFriendInput('');
-            if (response.status === 400) {
+            if (response.status === 400 | response.status === 404) {
                 setErrorMessage(response.message);
                 setIsPopupOpen(true);
                 return;
@@ -116,6 +116,8 @@ function Dashboard() {
                     <div className="progress-dates"> 
                         <h2>{streak} DAY STREAK</h2>
                         <Calendar
+                            // onChange={handleDateChange}
+                            // value={date}
                             tileContent={({ date, view }) => {
                             
                             }}
@@ -153,7 +155,7 @@ function Dashboard() {
                             friendsList.map((friend, index) => (
                                 <div className='leader-box' key={friend}>
                                     <p>{index + 1}.&nbsp; {friend}</p>&nbsp;
-                                    <p>{friendStreaks[friend]} day streak</p>
+                                    <p>{friendStreaks[friend]} day streak</p> 
                                 </div>
                                 
                             ))
