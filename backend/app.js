@@ -12,8 +12,18 @@ const { generateDailyChallenge } = require('./controllers/challengeController');
 dotenv.config();
 
 app.use(express.json()); // parse incoming JSON data
-app.use(cors());   
+const allowedOrigins = ['https://we-are-fit.vercel.app'];
 
+app.use(cors({
+    origin: (origin, callback) => {
+        if (allowedOrigins.includes(origin) || (origin && origin.startsWith('http://localhost'))) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+}));
 connectDB();
 
 const authRoutes = require('./routes/authRoutes.js');
