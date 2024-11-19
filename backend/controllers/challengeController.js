@@ -3,6 +3,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const dotenv = require('dotenv');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const axios = require('axios');
+const { cosineSimilarity } = require('cosine-similarity');
 dotenv.config();
 
 const fetchDailyChallenge = async (req, res) => {
@@ -49,6 +51,39 @@ const getRandomWorkoutFromFile = async (file) => {
     }
 };
 
+const HUGGINGFACE_API_URL = 'https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2';
+
+const getEmbedding = async (sentence) => {
+    try {
+      const response = await axios.post(
+        HUGGINGFACE_API_URL,
+        { inputs: sentence },
+        { headers: { Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}` } }
+      );
+      return response.data[0].embedding;  // Embedding vector from Hugging Face response
+    } catch (error) {
+      console.error('Error getting sentence embedding:', error);
+      return null;
+    }
+  };
+  
+  // Function to check semantic similarity
+  const checkSemanticSimilarity = async (newWorkout, existingWorkouts) => {
+    const newWorkoutEmbedding = await getEmbedding(newWorkout);
+  
+    for (let existingWorkout of existingWorkouts) {
+      const existingEmbedding = await getEmbedding(existingWorkout.workoutText);  // Assuming 'workoutText' is the text field
+  
+      if (newWorkoutEmbedding && existingEmbedding) {
+        const similarity = cosineSimilarity(newWorkoutEmbedding, existingEmbedding);
+        if (similarity > 0.8) {  // Similarity threshold (0 to 1)
+          return true;  // Workouts are too similar
+        }
+      }
+    }
+    return false;  // Workouts are unique
+  };
+
 const generateDailyChallenge = async () => {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
@@ -57,23 +92,45 @@ const generateDailyChallenge = async () => {
         const genAI = new GoogleGenerativeAI(process.env.API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-        const beginnerPrompt = "Generate a one-sentence workout for beginners.";
-        const intermediatePrompt = "Generate a one-sentence workout for intermediate users.";
-        const advancedPrompt = "Generate a one-sentence workout for advanced users.";
+        let isUnique = false;
+        let workoutEntry;
 
-        const beginnerResult = await model.generateContent(beginnerPrompt);
-        const intermediateResult = await model.generateContent(intermediatePrompt);
-        const advancedResult = await model.generateContent(advancedPrompt);
+        const existingChallenges = await Challenge.find();
 
-        const workoutEntry = new Challenge({
-            date: today,
-            beginnerWorkout: beginnerResult.response.text(),
-            intermediateWorkout: intermediateResult.response.text(),
-            advancedWorkout: advancedResult.response.text()
-        });
+        while (!isUnique) {
+            const beginnerPrompt = "Generate a one-sentence workout for beginners.";
+            const intermediatePrompt = "Generate a one-sentence workout for intermediate users.";
+            const advancedPrompt = "Generate a one-sentence workout for advanced users.";
 
-        await workoutEntry.save(); 
-        console.log('Daily challenge generated successfully.', workoutEntry);
+            const beginnerResult = await model.generateContent(beginnerPrompt);
+            const intermediateResult = await model.generateContent(intermediatePrompt);
+            const advancedResult = await model.generateContent(advancedPrompt);
+
+            const beginnerWorkout = beginnerResult.response.text();
+            const intermediateWorkout = intermediateResult.response.text();
+            const advancedWorkout = advancedResult.response.text();
+
+            console.log('Generated workouts:', beginnerWorkout, intermediateWorkout, advancedWorkout);
+
+            const beginnerSimilar = await checkSemanticSimilarity(beginnerWorkout, existingChallenges);
+            const intermediateSimilar = await checkSemanticSimilarity(intermediateWorkout, existingChallenges);
+            const advancedSimilar = await checkSemanticSimilarity(advancedWorkout, existingChallenges);
+
+            if (!beginnerSimilar && !intermediateSimilar && !advancedSimilar) {
+                workoutEntry = new Challenge({
+                    date: today,
+                    beginnerWorkout,
+                    intermediateWorkout,
+                    advancedWorkout
+                });
+                isUnique = true;
+            } else {
+                console.log('Generated challenge already exists. Generating a new one...');
+            }
+        }
+
+        await workoutEntry.save();
+        console.log('Daily challenge generated successfully:', workoutEntry);
     } catch (error) {
         console.error('Error saving the workout entry:', error);
     }

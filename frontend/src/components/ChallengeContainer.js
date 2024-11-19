@@ -23,7 +23,7 @@ const ChallengeContainer = () => {
     useEffect(() => {
         const loadWorkoutChallenges = async () => {
             setLoading(true);
-            const storedChallenges = localStorage.getItem('workoutChallenges');
+            const storedChallenges = sessionStorage.getItem('workoutChallenges');
             
             if (storedChallenges) {
                 const data = JSON.parse(storedChallenges);
@@ -36,7 +36,7 @@ const ChallengeContainer = () => {
                     setBeginner(data[0].beginnerWorkout);
                     setIntermediate(data[0].intermediateWorkout);
                     setAdvanced(data[0].advancedWorkout);
-                    localStorage.setItem('workoutChallenges', JSON.stringify({
+                    sessionStorage.setItem('workoutChallenges', JSON.stringify({
                         beginner: data[0].beginnerWorkout,
                         intermediate: data[0].intermediateWorkout,
                         advanced: data[0].advancedWorkout,
@@ -71,21 +71,21 @@ const ChallengeContainer = () => {
         setBeginnerChallenge(true);
         setIntermediateChallenge(false);
         setAdvancedChallenge(false);
-        localStorage.setItem('challengeDifficulty', 'beginner');
+        sessionStorage.setItem('challengeDifficulty', 'beginner');
     };
 
     const toggleIntermediate = () => {
         setIntermediateChallenge(true);
         setBeginnerChallenge(false);
         setAdvancedChallenge(false);
-        localStorage.setItem('challengeDifficulty', 'intermediate');
+        sessionStorage.setItem('challengeDifficulty', 'intermediate');
     };
 
     const toggleAdvanced = () => {
         setAdvancedChallenge(true);
         setBeginnerChallenge(false);
         setIntermediateChallenge(false);
-        localStorage.setItem('challengeDifficulty', 'advanced');
+        sessionStorage.setItem('challengeDifficulty', 'advanced');
     };
 
     const handleChallengeComplete = async () => {
