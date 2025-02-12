@@ -45,7 +45,7 @@ function Navbar() {
                 </button>
             </div>
             <div className='hiddenLinks' id={openLinks ? "open" : "close"}>
-                <Link to="/dashboard">DASHBOARD</Link>
+                <a style={{'cursor': 'pointer'}} onClick={handleAccountClick}>DASHBOARD</a>
                 <Link to="/past">PAST CHALLENGES</Link>
             </div>
             <div className='join'>
